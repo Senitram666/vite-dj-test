@@ -2,13 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #00577D;
+}
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+
+  [x-cloak] {
+    display: none !important;
+  }
+}
+
 @layer components {
   .btn {
     @apply px-4 py-2 rounded-md font-medium transition-colors;
   }
   
   .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700;
+    @apply bg-primary text-white hover:bg-primary-dark;
   }
   
   .btn-danger {
@@ -17,10 +31,16 @@
   
   .input {
     @apply w-full px-3 py-2 border border-gray-300 rounded-md 
-           focus:outline-none focus:ring-2 focus:ring-blue-500;
+           focus:outline-none focus:ring-2 focus:ring-primary;
   }
   
   .card {
     @apply bg-white rounded-xl shadow-md overflow-hidden;
+  }
+
+  .login-instruction {
+    @apply text-base leading-6 tracking-[-0.408px] text-left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
   }
 }

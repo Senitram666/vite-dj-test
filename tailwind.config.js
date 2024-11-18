@@ -2,10 +2,31 @@
 export default {
   content: [
     "./index.html",
-    "./**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./styles/**/*.{css,scss}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#00577D',
+          dark: '#004666',
+          light: '#006894'
+        }
+      },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif']
+      }
+    },
   },
   plugins: [],
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
+  safelist: [
+    'bg-primary',
+    'text-white',
+    'hover:bg-primary-dark'
+  ]
 }

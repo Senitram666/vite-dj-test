@@ -1,5 +1,8 @@
+import { animate, spring } from 'motion'
+
 export default () => ({
   activeTab: 'dashboard',
+  previousTab: null,
   tabs: [
     { id: 'dashboard', name: 'Dashboard' },
     { id: 'pedidos', name: 'Pedidos' },
@@ -25,43 +28,44 @@ export default () => ({
     }
   ],
 
-  // Sample API calls for dashboard data
-  /*
-  async fetchDashboardData() {
-    try {
-      const response = await fetch('/api/dashboard/stats/', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
+  init() {
+    this.$watch('activeTab', (value, oldValue) => {
+      this.previousTab = oldValue
+      this.animateTabTransition()
+    })
+  },
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch dashboard data')
-      }
+  async animateTabTransition() {
+    const oldContent = document.querySelector(`[data-tab="${this.previousTab}"]`)
+    const newContent = document.querySelector(`[data-tab="${this.activeTab}"]`)
+    
+    if (oldContent && newContent) {
+      // Slide out old content
+      await animate(oldContent, 
+        { 
+          opacity: [1, 0],
+          x: [0, -20]
+        }, 
+        { duration: 0.2 }
+      )
+      oldContent.style.display = 'none'
 
-      const data = await response.json()
-      this.dashboardCards = [
+      // Prepare new content
+      newContent.style.display = 'grid'
+      newContent.style.opacity = '0'
+      newContent.style.transform = 'translateX(20px)'
+
+      // Slide in new content
+      await animate(newContent,
         { 
-          id: 1, 
-          title: 'Total Pedidos', 
-          content: `${data.total_pedidos} pedidos este mês` 
+          opacity: [0, 1],
+          x: [20, 0]
         },
         { 
-          id: 2, 
-          title: 'Arquitetos Ativos', 
-          content: `${data.arquitetos_ativos} arquitetos` 
-        },
-        { 
-          id: 3, 
-          title: 'Experiências Realizadas', 
-          content: `${data.experiencias} experiências` 
+          duration: 0.3,
+          easing: spring({ stiffness: 100, damping: 15 })
         }
-      ]
-    } catch (error) {
-      console.error('Dashboard data fetch error:', error)
+      )
     }
   }
-  */
 })

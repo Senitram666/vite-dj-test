@@ -5,16 +5,19 @@ import login from './components/login.js'
 import navbar from './components/navbar.js'
 import dashboard from './components/dashboard.js'
 
+window.Alpine = Alpine
+
 // Register Alpine.js stores
 Alpine.store('auth', auth)
 
 // Register Alpine.js components
-Alpine.data('login', login)
+Alpine.data('loginForm', login)
 Alpine.data('navbar', navbar)
 Alpine.data('dashboard', dashboard)
 
 // Initialize auth store
-Alpine.store('auth').init()
+document.addEventListener('alpine:init', () => {
+  Alpine.store('auth').init()
+})
 
-window.Alpine = Alpine
 Alpine.start()
