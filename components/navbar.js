@@ -1,3 +1,4 @@
+import navbarTemplate from './templates/navbar.html';
 export default () => ({
   notifications: [
     {
@@ -16,6 +17,7 @@ export default () => ({
       time: '2 hours ago'
     }
   ],
+  template: navbarTemplate,
 
   // Sample API call for notifications
   /*

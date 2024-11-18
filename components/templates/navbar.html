@@ -1,0 +1,81 @@
+<div class="container mx-auto px-4 py-3">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center space-x-4 text-white">
+        <img src="/public/logo-white.png" alt="Logo" class="h-8 w-auto" />
+        <div>
+          <span
+            class="text-lg font-semibold"
+            x-text="'Olá, ' + $store.auth.user?.username"
+          ></span>
+          <span
+            class="text-xs ml-2 align-text-top"
+            x-text="$store.auth.user?.type || 'Lojista'"
+          ></span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <!-- Notifications Dropdown -->
+        <div class="relative" x-data="{ open: false }">
+          <button
+            @click="open = !open"
+            class="p-2 hover:bg-gray-100 rounded-full"
+          >
+            <i class="fas fa-bell"></i>
+          </button>
+          <div
+            x-show="open"
+            @click.away="open = false"
+            class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg py-2 z-50"
+          >
+            <div class="px-4 py-2 border-b border-gray-200">
+              <h3 class="font-semibold">Notifications</h3>
+            </div>
+            <div class="max-h-64 overflow-y-auto">
+              <template
+                x-for="notification in notifications"
+                :key="notification.id"
+              >
+                <div class="px-4 py-2 hover:bg-gray-50">
+                  <p x-text="notification.message" class="text-sm"></p>
+                  <span
+                    x-text="notification.time"
+                    class="text-xs text-gray-500"
+                  ></span>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Dropdown -->
+        <div class="relative" x-data="{ open: false }">
+          <button
+            @click="open = !open"
+            class="p-2 hover:bg-gray-100 rounded-full"
+          >
+            <i class="fas fa-user"></i>
+          </button>
+          <div
+            x-show="open"
+            @click.away="open = false"
+            class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
+          >
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">
+              <i class="fas fa-key mr-2"></i> Manage Password
+            </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-100">
+              <i class="fas fa-user-cog mr-2"></i> Manage Profile
+            </a>
+            <hr class="my-2" />
+            <button
+              @click="logout"
+              class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
+            >
+              <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

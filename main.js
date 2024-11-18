@@ -5,8 +5,11 @@ import login from './components/login.js'
 import navbar from './components/navbar.js'
 import dashboard from './components/dashboard.js'
 
-window.Alpine = Alpine
 
+window. 
+window. 
+window.Alpine = Alpine
+ 
 // Register Alpine.js stores
 Alpine.store('auth', auth)
 
