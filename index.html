@@ -17,22 +17,22 @@
       rel="stylesheet"
     />
   </head>
-  <body class="bg-gray-100 min-h-screen font-inter" x-data>
+  <body class="bg-primary h-screen  flex flex-col font-inter" x-data>
     <!-- Navbar -->
     <template x-if="$store.auth.isAuthenticated">
-      <nav x-data="navbar" class="bg-white shadow-sm relative z-50">
+      <nav x-data="navbar" class="relative z-50">
         <div class="container mx-auto px-4 py-3">
           <div class="flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-              <img src="/logo.svg" alt="Logo" class="h-8 w-auto" />
+            <div class="flex items-center space-x-4 text-white">
+              <img src="/public/logo-white.png" alt="Logo" class="h-8 w-auto" />
               <div>
                 <span
                   class="text-lg font-semibold"
                   x-text="'Olá, ' + $store.auth.user?.username"
                 ></span>
                 <span
-                  class="text-sm text-gray-500 ml-2"
-                  x-text="$store.auth.user?.type || 'User'"
+                  class="text-xs ml-2 align-text-top"
+                  x-text="$store.auth.user?.type || 'Lojista'"
                 ></span>
               </div>
             </div>
@@ -106,296 +106,295 @@
     </template>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-      <!-- Login/Register Form -->
-      <div
-        x-show="!$store.auth.isAuthenticated"
-        x-cloak
-        class="w-screen h-screen absolute inset-0 md:flex"
-      >
-        <!-- Mobile Background -->
-        <div class="fixed inset-0 bg-primary md:hidden -z-10"></div>
-
-        <!-- Left side - Form -->
+    <main class="w-100 flex-grow bg-white rounded-tl-3xl rounded-tr-2xl">
+      <div class="container">
+        <!-- Login/Register Form -->
         <div
-          class="w-full md:w-2/5 p-4 md:p-8 flex items-center justify-center"
+          x-show="!$store.auth.isAuthenticated"
+          x-cloak
+          class="w-screen h-screen absolute inset-0 md:flex"
         >
+          <!-- Mobile Background -->
+          <div class="fixed inset-0 bg-primary md:hidden -z-10"></div>
+
+          <!-- Left side - Form -->
           <div
-            x-data="loginForm"
-            class="w-full max-w-md bg-white md:bg-transparent rounded-xl p-6 md:p-0"
+            class="w-full md:w-2/5 p-4 md:p-8 flex items-center justify-center"
           >
-            <template x-if="!isRegistering">
-              <!-- Login Form -->
-              <div>
-                <h2 class="text-2xl font-bold mb-3">Login</h2>
-                <p class="login-instruction mb-6">
-                  Entre com seu email e senha cadastrados ou crie um cadastro.
-                </p>
+            <div
+              x-data="loginForm"
+              class="w-full max-w-md bg-white md:bg-transparent rounded-xl p-6 md:p-0"
+            >
+              <template x-if="!isRegistering">
+                <!-- Login Form -->
+                <div>
+                  <h2 class="text-2xl font-bold mb-3">Login</h2>
+                  <p class="login-instruction mb-6">
+                    Entre com seu email e senha cadastrados ou crie um cadastro.
+                  </p>
 
-                <form @submit.prevent="handleSubmit">
-                  <div class="space-y-4">
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        x-model="formData.username"
-                        class="input"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Senha
-                      </label>
-                      <input
-                        type="password"
-                        x-model="formData.password"
-                        class="input"
-                        required
-                      />
-                    </div>
-
-                    <div
-                      x-show="formData.error"
-                      x-text="formData.error"
-                      class="text-red-600 text-sm"
-                    ></div>
-
-                    <button type="submit" class="btn btn-primary w-full">
-                      Entrar
-                    </button>
-
-                    <div class="text-center">
-                      <span class="text-gray-500 login-instruction"
-                        >Ainda não possui Cadastro?
-                      </span>
-                      <button
-                        @click="toggleForm"
-                        type="button"
-                        class="text-primary hover:underline login-instruction"
-                      >
-                        Cadastrar
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </template>
-
-            <template x-if="isRegistering">
-              <!-- Register Form -->
-              <div>
-                <h2 class="text-2xl font-bold mb-3">Cadastro</h2>
-                <p class="login-instruction mb-6">
-                  Preencha os dados abaixo para criar sua conta.
-                </p>
-
-                <form @submit.prevent="handleSubmit">
-                  <div class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
+                  <form @submit.prevent="handleSubmit">
+                    <div class="space-y-4">
                       <div>
                         <label
                           class="block text-sm font-medium text-gray-700 mb-1"
                         >
-                          Nome
+                          Email
                         </label>
                         <input
-                          type="text"
-                          x-model="formData.firstName"
+                          type="email"
+                          x-model="formData.username"
                           class="input"
                           required
                         />
                       </div>
+
                       <div>
                         <label
                           class="block text-sm font-medium text-gray-700 mb-1"
                         >
-                          Sobrenome
+                          Senha
                         </label>
                         <input
-                          type="text"
-                          x-model="formData.lastName"
+                          type="password"
+                          x-model="formData.password"
                           class="input"
                           required
                         />
                       </div>
-                    </div>
 
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        x-model="formData.username"
-                        class="input"
-                        required
-                      />
-                    </div>
+                      <div
+                        x-show="formData.error"
+                        x-text="formData.error"
+                        class="text-red-600 text-sm"
+                      ></div>
 
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Senha
-                      </label>
-                      <input
-                        type="password"
-                        x-model="formData.password"
-                        class="input"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <label
-                        class="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Confirmar Senha
-                      </label>
-                      <input
-                        type="password"
-                        x-model="formData.confirmPassword"
-                        class="input"
-                        required
-                      />
-                    </div>
-
-                    <div
-                      x-show="formData.error"
-                      x-text="formData.error"
-                      class="text-red-600 text-sm"
-                    ></div>
-
-                    <button type="submit" class="btn btn-primary w-full">
-                      Cadastrar
-                    </button>
-
-                    <div class="text-center">
-                      <span class="text-gray-500 login-instruction"
-                        >Já possui conta?
-                      </span>
-                      <button
-                        @click="toggleForm"
-                        type="button"
-                        class="text-primary hover:underline login-instruction"
-                      >
+                      <button type="submit" class="btn btn-primary w-full">
                         Entrar
                       </button>
+
+                      <div class="text-center">
+                        <span class="text-gray-500 login-instruction"
+                          >Ainda não possui Cadastro?
+                        </span>
+                        <button
+                          @click="toggleForm"
+                          type="button"
+                          class="text-primary hover:underline login-instruction"
+                        >
+                          Cadastrar
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </form>
-              </div>
-            </template>
-          </div>
-        </div>
-
-        <!-- Right side - Background Image (hidden on mobile) -->
-        <div
-          class="hidden md:block w-3/5 bg-cover bg-center"
-          style="
-            background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80');
-          "
-        ></div>
-      </div>
-
-      <!-- Dashboard -->
-      <template x-if="$store.auth.isAuthenticated" x-cloak>
-        <div x-data="dashboard">
-          <!-- Tabs -->
-          <div class="border-b border-gray-200 mb-6">
-            <nav class="flex space-x-8">
-              <template x-for="tab in tabs" :key="tab.id">
-                <button
-                  @click="activeTab = tab.id"
-                  :class="{'border-b-2 border-blue-500': activeTab === tab.id}"
-                  class="py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700"
-                  x-text="tab.name"
-                ></button>
+                  </form>
+                </div>
               </template>
-            </nav>
-          </div>
 
-          <!-- Tab Content -->
-          <div class="relative z-0">
-            <!-- Dashboard -->
-            <div
-              data-tab="dashboard"
-              :style="activeTab === 'dashboard' ? '' : 'display: none'"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              <template x-for="card in dashboardCards" :key="card.id">
-                <div class="card p-6">
-                  <h3
-                    class="text-lg font-semibold mb-2"
-                    x-text="card.title"
-                  ></h3>
-                  <p class="text-gray-600" x-text="card.content"></p>
+              <template x-if="isRegistering">
+                <!-- Register Form -->
+                <div>
+                  <h2 class="text-2xl font-bold mb-3">Cadastro</h2>
+                  <p class="login-instruction mb-6">
+                    Preencha os dados abaixo para criar sua conta.
+                  </p>
+
+                  <form @submit.prevent="handleSubmit">
+                    <div class="space-y-4">
+                      <div class="grid grid-cols-2 gap-4">
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Nome
+                          </label>
+                          <input
+                            type="text"
+                            x-model="formData.firstName"
+                            class="input"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label
+                            class="block text-sm font-medium text-gray-700 mb-1"
+                          >
+                            Sobrenome
+                          </label>
+                          <input
+                            type="text"
+                            x-model="formData.lastName"
+                            class="input"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          x-model="formData.username"
+                          class="input"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Senha
+                        </label>
+                        <input
+                          type="password"
+                          x-model="formData.password"
+                          class="input"
+                          required
+                        />
+                      </div>
+
+                      <div>
+                        <label
+                          class="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Confirmar Senha
+                        </label>
+                        <input
+                          type="password"
+                          x-model="formData.confirmPassword"
+                          class="input"
+                          required
+                        />
+                      </div>
+
+                      <div
+                        x-show="formData.error"
+                        x-text="formData.error"
+                        class="text-red-600 text-sm"
+                      ></div>
+
+                      <button type="submit" class="btn btn-primary w-full">
+                        Cadastrar
+                      </button>
+
+                      <div class="text-center">
+                        <span class="text-gray-500 login-instruction"
+                          >Já possui conta?
+                        </span>
+                        <button
+                          @click="toggleForm"
+                          type="button"
+                          class="text-primary hover:underline login-instruction"
+                        >
+                          Entrar
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </template>
             </div>
+          </div>
 
-            <!-- Pedidos -->
-            <div
-              data-tab="pedidos"
-              :style="activeTab === 'pedidos' ? '' : 'display: none'"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              <div class="card p-6 col-span-full">
-                <h3 class="text-lg font-semibold mb-2">Pedidos Page</h3>
-                <p class="text-gray-600">Sample content for Pedidos tab</p>
-              </div>
+          <!-- Right side - Background Image (hidden on mobile) -->
+          <div
+            class="hidden md:block w-3/5 bg-no-repeat bg-cover bg-bottom bg-primary bg-login-img"
+          ></div>
+        </div>
+
+        <!-- Dashboard -->
+        <template x-if="$store.auth.isAuthenticated" x-cloak>
+          <div x-data="dashboard">
+            <!-- Tabs -->
+            <div class="border-b border-gray-200 mb-6">
+              <nav class="flex space-x-8">
+                <template x-for="tab in tabs" :key="tab.id">
+                  <button
+                    @click="activeTab = tab.id"
+                    :class="{'border-b-2 border-blue-500': activeTab === tab.id}"
+                    class="py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700"
+                    x-text="tab.name"
+                  ></button>
+                </template>
+              </nav>
             </div>
 
-            <!-- Arquitetos -->
-            <div
-              data-tab="arquitetos"
-              :style="activeTab === 'arquitetos' ? '' : 'display: none'"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              <div class="card p-6 col-span-full">
-                <h3 class="text-lg font-semibold mb-2">Arquitetos Page</h3>
-                <p class="text-gray-600">Sample content for Arquitetos tab</p>
+            <!-- Tab Content -->
+            <div class="relative z-0">
+              <!-- Dashboard -->
+              <div
+                data-tab="dashboard"
+                :style="activeTab === 'dashboard' ? '' : 'display: none'"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                <template x-for="card in dashboardCards" :key="card.id">
+                  <div class="card p-6">
+                    <h3
+                      class="text-lg font-semibold mb-2"
+                      x-text="card.title"
+                    ></h3>
+                    <p class="text-gray-600" x-text="card.content"></p>
+                  </div>
+                </template>
               </div>
-            </div>
 
-            <!-- Experiencias -->
-            <div
-              data-tab="experiencias"
-              :style="activeTab === 'experiencias' ? '' : 'display: none'"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              <div class="card p-6 col-span-full">
-                <h3 class="text-lg font-semibold mb-2">Experiências Page</h3>
-                <p class="text-gray-600">Sample content for Experiências tab</p>
+              <!-- Pedidos -->
+              <div
+                data-tab="pedidos"
+                :style="activeTab === 'pedidos' ? '' : 'display: none'"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                <div class="card p-6 col-span-full">
+                  <h3 class="text-lg font-semibold mb-2">Pedidos Page</h3>
+                  <p class="text-gray-600">Sample content for Pedidos tab</p>
+                </div>
               </div>
-            </div>
 
-            <!-- Campanhas Bonus -->
-            <div
-              data-tab="campanhas"
-              :style="activeTab === 'campanhas' ? '' : 'display: none'"
-              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-              <div class="card p-6 col-span-full">
-                <h3 class="text-lg font-semibold mb-2">Campanhas Bônus Page</h3>
-                <p class="text-gray-600">
-                  Sample content for Campanhas Bônus tab
-                </p>
+              <!-- Arquitetos -->
+              <div
+                data-tab="arquitetos"
+                :style="activeTab === 'arquitetos' ? '' : 'display: none'"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                <div class="card p-6 col-span-full">
+                  <h3 class="text-lg font-semibold mb-2">Arquitetos Page</h3>
+                  <p class="text-gray-600">Sample content for Arquitetos tab</p>
+                </div>
+              </div>
+
+              <!-- Experiencias -->
+              <div
+                data-tab="experiencias"
+                :style="activeTab === 'experiencias' ? '' : 'display: none'"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                <div class="card p-6 col-span-full">
+                  <h3 class="text-lg font-semibold mb-2">Experiências Page</h3>
+                  <p class="text-gray-600">Sample content for Experiências tab</p>
+                </div>
+              </div>
+
+              <!-- Campanhas Bonus -->
+              <div
+                data-tab="campanhas"
+                :style="activeTab === 'campanhas' ? '' : 'display: none'"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                <div class="card p-6 col-span-full">
+                  <h3 class="text-lg font-semibold mb-2">Campanhas Bônus Page</h3>
+                  <p class="text-gray-600">
+                    Sample content for Campanhas Bônus tab
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
     </main>
   </body>
 </html>

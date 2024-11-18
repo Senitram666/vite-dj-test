@@ -16,6 +16,9 @@ export default {
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif']
+      },
+      backgroundImage: {
+        'login-img': "url('public/login.png')",
       }
     },
   },
