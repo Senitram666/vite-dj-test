@@ -35,7 +35,15 @@
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-md overflow-hidden;
+    @apply bg-white rounded-lg border border-gray-300 overflow-hidden;
+  }
+
+  .card .header{
+    @apply py-4 px-6 border-b border-gray-300;
+  }
+
+  .card .body{
+    @apply px-6;
   }
 
   .login-instruction {

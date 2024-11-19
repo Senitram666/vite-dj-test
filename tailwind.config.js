@@ -10,8 +10,13 @@ export default {
       colors: {
         primary: {
           DEFAULT: '#00577D',
-          dark: '#004666',
-          light: '#006894'
+          dark: '#00354D',
+          light: '#166488'
+        },
+        neutral: {
+          DEFAULT: '#667085',
+          dark: '#475467',
+          light: '#B9BEC9'
         }
       },
       fontFamily: {
