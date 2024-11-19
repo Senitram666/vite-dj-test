@@ -99,11 +99,20 @@ export default () => ({
 
   init() {
     this.$watch('activeTab', (value, oldValue) => {
+      this.mobileShowTabs = false
       this.previousTab = oldValue
       this.animateTabTransition()
       const item = this.tabs.find(element => element.id === value);
       this.activeTabName = item ? item.name : null;
     })
+  },
+
+  async tabs_init(value, el) {
+      if (value) {
+        animate(el, { y: ['100%', '0%'] }, { duration: 0.5 });
+      } else {
+        animate(el, { y: ['0%', '100%'] }, { duration: 0.55 });
+      }
   },
 
   async draw_bargraph(canvas_id, data, labels) {

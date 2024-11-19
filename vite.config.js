@@ -1,3 +1,5 @@
+import alpineIncludePlugin from './plugins/vite-plugin-alpine-include.js';
+
 export default {
   build: {
     modulePreload: true,
@@ -35,5 +37,8 @@ export default {
     hmr: {
       overlay: false
     }
-  }
+  },
+  plugins: [
+    alpineIncludePlugin(),
+  ],
 }

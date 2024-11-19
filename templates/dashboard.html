@@ -1,163 +1,55 @@
-<!-- Dashboard -->
-<template x-if="$store.auth.isAuthenticated" x-cloak>
-    <div x-data="dashboard">
-      <!-- Tabs mobile -->
-      <div class="md:hidden border-b border-gray-200 mb-6 fixed inset-x-0 bottom-0 z-[100] bg-white" x-show.important="mobileShowTabs" x-cloak>
-        <nav class="flex space-x-8 flex-col">
-            <button @click="mobileShowTabs = false">
-                close
-            </button>
-          <template x-for="tab in tabs" :key="tab.id">
-            <button
-              @click="activeTab = tab.id"
-              :class="{'border-b-2 border-blue-500 text-primary': activeTab === tab.id}"
-              class="py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 flex"
-            >
-            <span x-html="tab.icon"></span>
-            <span class="pl-3" x-text="tab.name"></span>
-          </button>
-          </template>
-        </nav>
+<template x-for="card in dashboardCards" :key="card.id">
+    <div class="card" :class="card.big ? 'lg:col-span-3 md:col-span-2' : ''">
+      <div class="header flex justify-between">
+        <h3
+        class="text-lg font-semibold text-neutral-dark"
+        x-text="card.title"
+      ></h3>
+      <span class="text-primary" x-show="card.headerLink" x-text="card.headerLink">
+        <!-- TODO: Modal com lista completa -->
+      </span>
       </div>
-      <!-- Tabs web -->
-      <div class="hidden md:block border-b border-gray-200 mb-6">
-        <nav class="flex space-x-8">
-          <template x-for="tab in tabs" :key="tab.id">
-            <button
-              @click="activeTab = tab.id"
-              :class="{'border-b-2 border-blue-500 text-primary': activeTab === tab.id}"
-              class="py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 flex"
-            >
-                <span x-html="tab.icon"></span>
-                <span class="pl-3" x-text="tab.name"></span>
-            </button>
-          </template>
-        </nav>
-      </div>
-
-      <!-- Tab Content -->
-      <div class="relative z-0">
-        <div>
-            <button class="inline md:hidden" @click="mobileShowTabs = true">
-                <svg height="1em" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 12C0.71667 12 0.479337 11.904 0.288004 11.712C0.0966702 11.52 0.000670115 11.2827 3.44827e-06 11C-0.000663218 10.7173 0.0953369 10.48 0.288004 10.288C0.48067 10.096 0.718003 10 1 10H17C17.2833 10 17.521 10.096 17.713 10.288C17.905 10.48 18.0007 10.7173 18 11C17.9993 11.2827 17.9033 11.5203 17.712 11.713C17.5207 11.9057 17.2833 12.0013 17 12H1ZM1 7C0.71667 7 0.479337 6.904 0.288004 6.712C0.0966702 6.52 0.000670115 6.28267 3.44827e-06 6C-0.000663218 5.71733 0.0953369 5.48 0.288004 5.288C0.48067 5.096 0.718003 5 1 5H17C17.2833 5 17.521 5.096 17.713 5.288C17.905 5.48 18.0007 5.71733 18 6C17.9993 6.28267 17.9033 6.52033 17.712 6.713C17.5207 6.90567 17.2833 7.00133 17 7H1ZM1 2C0.71667 2 0.479337 1.904 0.288004 1.712C0.0966702 1.52 0.000670115 1.28267 3.44827e-06 1C-0.000663218 0.717333 0.0953369 0.48 0.288004 0.288C0.48067 0.0960001 0.718003 0 1 0H17C17.2833 0 17.521 0.0960001 17.713 0.288C17.905 0.48 18.0007 0.717333 18 1C17.9993 1.28267 17.9033 1.52033 17.712 1.713C17.5207 1.90567 17.2833 2.00133 17 2H1Z" fill="currentColor"/>
-                </svg>
-            </button>
-            <h1 class="inline py-2.5 text-center md:text-left" x-text="activeTabName"></h1>
+      <div class="body" :class="card.big ? 'py-4' : 'py-6 h-48'">
+        <template x-if="card.type == 'bargraph'">
+          <canvas x-data="{ id: $id('canvas') }" :id="id" x-init="draw_bargraph(id, card.data, card.labels)"></canvas>
+        </template>
+        <template x-if="card.type == 'number'">
+          <div class="h-full flex flex-col justify-between">
+            <div class="py-3.5">
+              <h1 x-text="card.value" class="text-primary-40 font-bold text-4xl"></h1>
+          <p class="text-neutral" x-text="card.subtitle"></p>
+            </div>
+          
+          <div class="border-t pt-3 flex justify-between text-neutral">
+            <span>Período analisado</span>
+            <span class="flex items-center gap-x-2.5">
+              <span x-text="card.inicio"></span>
+              <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.6422 4.31563L9.07969 1.06563C9.03296 1.00629 8.97339 0.958321 8.90547 0.925306C8.83755 0.892291 8.76302 0.875092 8.6875 0.875H7.675C7.57031 0.875 7.5125 0.995312 7.57656 1.07812L9.83125 3.9375H0.375C0.30625 3.9375 0.25 3.99375 0.25 4.0625V5C0.25 5.06875 0.30625 5.125 0.375 5.125H11.2484C11.6672 5.125 11.9 4.64375 11.6422 4.31563Z" fill="currentColor"/>
+              </svg>                              
+              <span x-text="card.fim"></span>
+            </span>
+          </div>
         </div>
-        <!-- Dashboard -->
-        <div
-          data-tab="dashboard"
-          :style="activeTab === 'dashboard' ? '' : 'display: none'"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-        
-          <template x-for="card in dashboardCards" :key="card.id">
-            <div class="card" :class="card.big ? 'col-span-3' : ''">
-              <div class="header flex justify-between">
-                <h3
-                class="text-lg font-semibold text-neutral-dark"
-                x-text="card.title"
-              ></h3>
-              <span class="text-primary" x-show="card.headerLink" x-text="card.headerLink">
-                <!-- TODO: Modal com lista completa -->
+        </template>
+
+        <template x-if="card.type == 'table'">
+          <template x-for="item in card.items" :key="item.position">
+            <div class="flex gap-3.5 items-center py-2">
+              <span class="text-neutral w-4" x-text="item.position"></span>
+              <span 
+              class="w-10 h-10 rounded-full border place-content-center overflow-hidden" 
+              :class="item.position == 1 ? 'border-[#F08A00]' : ''"
+              x-html="item.img"
+              ></span>
+              <span class="grow text-neutral-dark" x-text="item.name"></span>
+              <span class="p-2 rounded-lg" :class="item.position == 1 ? 'bg-[#FFF7CD] text-[#F08A00]' : ''">
+                <span x-text="item.points"></span> Pontos
               </span>
-              </div>
-              <div class="body" :class="card.big ? 'py-4' : 'py-6 h-48'">
-                <template x-if="card.type == 'bargraph'">
-                  <canvas x-data="{ id: $id('canvas') }" :id="id" x-init="draw_bargraph(id, card.data, card.labels)"></canvas>
-                </template>
-                <template x-if="card.type == 'number'">
-                  <div class="h-full flex flex-col justify-between">
-                    <div class="py-3.5">
-                      <h1 x-text="card.value" class="text-primary-40 font-bold text-4xl"></h1>
-                  <p class="text-neutral" x-text="card.subtitle"></p>
-                    </div>
-                  
-                  <div class="border-t pt-3 flex justify-between text-neutral">
-                    <span>Período analisado</span>
-                    <span class="flex items-center gap-x-2.5">
-                      <span x-text="card.inicio"></span>
-                      <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11.6422 4.31563L9.07969 1.06563C9.03296 1.00629 8.97339 0.958321 8.90547 0.925306C8.83755 0.892291 8.76302 0.875092 8.6875 0.875H7.675C7.57031 0.875 7.5125 0.995312 7.57656 1.07812L9.83125 3.9375H0.375C0.30625 3.9375 0.25 3.99375 0.25 4.0625V5C0.25 5.06875 0.30625 5.125 0.375 5.125H11.2484C11.6672 5.125 11.9 4.64375 11.6422 4.31563Z" fill="currentColor"/>
-                      </svg>                              
-                      <span x-text="card.fim"></span>
-                    </span>
-                  </div>
-                </div>
-                </template>
-
-                <template x-if="card.type == 'table'">
-                  <template x-for="item in card.items" :key="item.position">
-                    <div class="flex gap-3.5 items-center py-2">
-                      <span class="text-neutral w-4" x-text="item.position"></span>
-                      <span 
-                      class="w-10 h-10 rounded-full border place-content-center overflow-hidden" 
-                      :class="item.position == 1 ? 'border-[#F08A00]' : ''"
-                      x-html="item.img"
-                      ></span>
-                      <span class="grow text-neutral-dark" x-text="item.name"></span>
-                      <span class="p-2 rounded-lg" :class="item.position == 1 ? 'bg-[#FFF7CD] text-[#F08A00]' : ''">
-                        <span x-text="item.points"></span> Pontos
-                      </span>
-                    </div>
-                  </template>
-                </template>
-
-              </div>
             </div>
           </template>
-        </div>
+        </template>
 
-        <!-- Pedidos -->
-        <div
-          data-tab="pedidos"
-          :style="activeTab === 'pedidos' ? '' : 'display: none'"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="card p-6 col-span-full">
-            <h3 class="text-lg font-semibold mb-2">Pedidos Page</h3>
-            <p class="text-gray-600">Sample content for Pedidos tab</p>
-          </div>
-        </div>
-
-        <!-- Arquitetos -->
-        <div
-          data-tab="arquitetos"
-          :style="activeTab === 'arquitetos' ? '' : 'display: none'"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="card p-6 col-span-full">
-            <h3 class="text-lg font-semibold mb-2">Arquitetos Page</h3>
-            <p class="text-gray-600">Sample content for Arquitetos tab</p>
-          </div>
-        </div>
-
-        <!-- Experiencias -->
-        <div
-          data-tab="experiencias"
-          :style="activeTab === 'experiencias' ? '' : 'display: none'"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="card p-6 col-span-full">
-            <h3 class="text-lg font-semibold mb-2">Experiências Page</h3>
-            <p class="text-gray-600">Sample content for Experiências tab</p>
-          </div>
-        </div>
-
-        <!-- Campanhas Bonus -->
-        <div
-          data-tab="campanhas"
-          :style="activeTab === 'campanhas' ? '' : 'display: none'"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="card p-6 col-span-full">
-            <h3 class="text-lg font-semibold mb-2">Campanhas Bônus Page</h3>
-            <p class="text-gray-600">
-              Sample content for Campanhas Bônus tab
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   </template>

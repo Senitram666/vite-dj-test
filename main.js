@@ -4,6 +4,7 @@ import auth from './components/auth.js'
 import login from './components/login.js'
 import navbar from './components/navbar.js'
 import dashboard from './components/dashboard.js'
+// import collapse from '@alpinejs/collapse'
 
 window.Alpine = Alpine
 
@@ -19,6 +20,8 @@ Alpine.data('dashboard', dashboard)
 document.addEventListener('alpine:init', () => {
   Alpine.store('auth').init()
 })
+
+// Alpine.plugin(collapse)
 
 Alpine.directive('include', (el, { expression }) => {
   console.log(expression);

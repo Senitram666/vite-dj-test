@@ -2,6 +2,7 @@
 export default {
   content: [
     "./index.html",
+    "./templates/**/*.html",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./styles/**/*.{css,scss}"
   ],
@@ -24,7 +25,7 @@ export default {
         inter: ['Inter', 'sans-serif']
       },
       backgroundImage: {
-        'login-img': "url('public/login.png')",
+        'login-img': "url('login.png')",
       }
     },
   },
