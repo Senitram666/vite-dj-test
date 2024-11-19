@@ -1,0 +1,195 @@
+<!-- Login/Register Form -->
+<template x-if="!$store.auth.isAuthenticated">
+    <div class="w-screen h-screen absolute inset-0 md:flex bg-primary">
+    <!-- Mobile Background -->
+    <!-- <div class="fixed inset-0 bg-primary md:hidden -z-10"></div> -->
+
+    <!-- Left side - Form -->
+    <div
+      class="w-full md:w-2/5 p-4 md:p-8 flex items-center justify-center md:bg-white"
+    >
+      <div
+        x-data="loginForm"
+        class="w-full max-w-md bg-white md:bg-transparent rounded-xl p-6 md:p-0"
+      >
+        <template x-if="!isRegistering">
+          <!-- Login Form -->
+          <div>
+            <h2 class="text-2xl font-bold mb-3">Login</h2>
+            <p class="login-instruction mb-6">
+              Entre com seu email e senha cadastrados ou crie um cadastro.
+            </p>
+
+            <form @submit.prevent="handleSubmit">
+              <div class="space-y-4">
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    x-model="formData.username"
+                    class="input"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Senha
+                  </label>
+                  <input
+                    type="password"
+                    x-model="formData.password"
+                    class="input"
+                    required
+                  />
+                </div>
+
+                <div
+                  x-show="formData.error"
+                  x-text="formData.error"
+                  class="text-red-600 text-sm"
+                ></div>
+
+                <button type="submit" class="btn btn-primary w-full">
+                  Entrar
+                </button>
+
+                <div class="text-center">
+                  <span class="text-gray-500 login-instruction"
+                    >Ainda não possui Cadastro?
+                  </span>
+                  <button
+                    @click="toggleForm"
+                    type="button"
+                    class="text-primary hover:underline login-instruction"
+                  >
+                    Cadastrar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </template>
+
+        <template x-if="isRegistering">
+          <!-- Register Form -->
+          <div>
+            <h2 class="text-2xl font-bold mb-3">Cadastro</h2>
+            <p class="login-instruction mb-6">
+              Preencha os dados abaixo para criar sua conta.
+            </p>
+
+            <form @submit.prevent="handleSubmit">
+              <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Nome
+                    </label>
+                    <input
+                      type="text"
+                      x-model="formData.firstName"
+                      class="input"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Sobrenome
+                    </label>
+                    <input
+                      type="text"
+                      x-model="formData.lastName"
+                      class="input"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    x-model="formData.username"
+                    class="input"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Senha
+                  </label>
+                  <input
+                    type="password"
+                    x-model="formData.password"
+                    class="input"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Confirmar Senha
+                  </label>
+                  <input
+                    type="password"
+                    x-model="formData.confirmPassword"
+                    class="input"
+                    required
+                  />
+                </div>
+
+                <div
+                  x-show="formData.error"
+                  x-text="formData.error"
+                  class="text-red-600 text-sm"
+                ></div>
+
+                <button type="submit" class="btn btn-primary w-full">
+                  Cadastrar
+                </button>
+
+                <div class="text-center">
+                  <span class="text-gray-500 login-instruction"
+                    >Já possui conta?
+                  </span>
+                  <button
+                    @click="toggleForm"
+                    type="button"
+                    class="text-primary hover:underline login-instruction"
+                  >
+                    Entrar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- Right side - Background Image (hidden on mobile) -->
+    <div
+      class="hidden md:block w-3/5 bg-no-repeat bg-cover bg-bottom bg-primary bg-login-img"
+    ></div>
+  </div>
+</template>

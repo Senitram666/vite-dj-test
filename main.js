@@ -20,4 +20,16 @@ document.addEventListener('alpine:init', () => {
   Alpine.store('auth').init()
 })
 
+Alpine.directive('include', (el, { expression }) => {
+  console.log(expression);
+  fetch(`/templates/${expression}`)
+    .then((response) => response.text())
+    .then((html) => {
+      el.innerHTML = html;
+    })
+    .catch((error) => {
+      console.error(`Failed to load template: ${expression}`, error);
+    });
+});
+
 Alpine.start()
