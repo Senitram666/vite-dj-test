@@ -340,6 +340,7 @@
                 :style="activeTab === 'dashboard' ? '' : 'display: none'"
                 class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
+              <h1 class="col-span-3 py-2.5">Dashboard</h1>
                 <template x-for="card in dashboardCards" :key="card.id">
                   <div class="card" :class="card.big ? 'col-span-3' : ''">
                     <div class="header flex justify-between">
@@ -358,7 +359,7 @@
                       <template x-if="card.type == 'number'">
                         <div class="h-full flex flex-col justify-between">
                           <div class="py-3.5">
-                            <h1 x-text="card.value" class="text-primary-light font-bold text-4xl"></h1>
+                            <h1 x-text="card.value" class="text-primary-40 font-bold text-4xl"></h1>
                         <p class="text-neutral" x-text="card.subtitle"></p>
                           </div>
                         
