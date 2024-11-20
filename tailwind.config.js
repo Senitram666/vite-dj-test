@@ -25,7 +25,7 @@ export default {
         inter: ['Inter', 'sans-serif']
       },
       backgroundImage: {
-        'login-img': "url('login.png')",
+        'login-img': "url('/login.png')",
       }
     },
   },

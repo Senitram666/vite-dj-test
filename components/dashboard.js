@@ -116,8 +116,6 @@ export default () => ({
   },
 
   async draw_bargraph(canvas_id, data, labels) {
-    console.log(canvas_id);
-    console.log(data);
     new Chart(
       document.getElementById(canvas_id),
       {
