@@ -4,6 +4,7 @@ import auth from './components/auth.js'
 import login from './components/login.js'
 import navbar from './components/navbar.js'
 import dashboard from './components/dashboard.js'
+import dynamicTable from './components/dynamic_table.js'
 // import collapse from '@alpinejs/collapse'
 
 window.Alpine = Alpine
@@ -15,6 +16,7 @@ Alpine.store('auth', auth)
 Alpine.data('loginForm', login)
 Alpine.data('navbar', navbar)
 Alpine.data('dashboard', dashboard)
+Alpine.data('dynamicTable', dynamicTable)
 
 // Initialize auth store
 document.addEventListener('alpine:init', () => {

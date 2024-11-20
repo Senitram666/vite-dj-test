@@ -76,12 +76,8 @@
           data-tab="pedidos"
           :style="activeTab === 'pedidos' ? '' : 'display: none'"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <div class="card p-6 col-span-full">
-            <h3 class="text-lg font-semibold mb-2">Pedidos Page</h3>
-            <p class="text-gray-600">Sample content for Pedidos tab</p>
-          </div>
-        </div>
+          x-include="pedidos.html"
+        ></div>
 
         <!-- Arquitetos -->
         <div
