@@ -1,58 +1,10 @@
-
-<div class="card p-6 col-span-full">
-    <h3 class="text-lg font-semibold mb-2">Pedidos Page</h3>
-    <p class="text-gray-600">Samples content for Pedidos tab</p>
-  </div>
-  <div class="p-6" x-data="dynamicTable([{ ID: 1, Name: 'Alice', Role: 'Admin' },{ ID: 2, Name: 'Bob', Role: 'User' },])">
-    <!-- Table Header -->
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-xl font-bold" x-text="table_title">Pedidos</h2>
-      <div class="flex items-center gap-2">
-        <input
-          type="text"
-          placeholder="Buscar"
-          class="border border-gray-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring focus:ring-blue-200"
-          x-model="search"
-          @input="filterRows"
-        />
-        <button class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
-          +
-        </button>
-      </div>
-    </div>
-  
-    <!-- Table -->
-    <table class="min-w-full border border-gray-200 rounded-lg shadow-sm text-left text-sm">
-      <thead class="bg-gray-100 border-b border-gray-200">
-        <tr>
-          <!-- Dynamically Render Headers -->
-          <template x-for="(header, index) in headers" :key="index">
-            <th class="px-4 py-2" x-text="header"></th>
-          </template>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200">
-        <!-- Dynamically Render Rows -->
-        <template x-for="row in filteredRows" :key="row.id">
-          <tr>
-            <template x-for="(value, key) in row" :key="key">
-              <td class="px-4 py-2" x-text="value"></td>
-            </template>
-          </tr>
-        </template>
-      </tbody>
-    </table>
-  
-    <!-- Pagination -->
-    <div class="mt-4 flex justify-between items-center">
-      <p class="text-sm text-gray-600">
-        Exibindo <span x-text="filteredRows.length"></span> de <span x-text="rows.length"></span> itens
-      </p>
-      <div class="flex items-center gap-2">
-        <!-- Dummy pagination buttons -->
-        <button class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-100">1</button>
-        <button class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-100">2</button>
-        <button class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-100">3</button>
-      </div>
-    </div>
-  </div>
+<!-- Pedidos Content -->
+<div class="col-span-full" x-include="components\dinamic_table.html"
+  x-data="dynamicTable([{id: 1, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'},
+{id: 2, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'},
+{id: 3, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'},
+{id: 4, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'},
+{id: 5, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'},
+{id: 6, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'},
+{id: 7, Pedido: '#12345', Nome: 'Nome do Usuário', Lançado: '12/09/2024', 'Data Venda': '12/09/2024', Status: 'Concluído', Total: 'R$ 1.123,00', Loja: 'NÚCLEO', Código: '867545', NF: '—'}])">
+</div>

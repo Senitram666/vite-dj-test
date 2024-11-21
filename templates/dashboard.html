@@ -11,26 +11,30 @@
       </div>
       <div class="body" :class="card.big ? 'py-4' : 'py-6 h-48'">
         <template x-if="card.type == 'bargraph'">
-          <canvas x-data="{ id: $id('canvas') }" :id="id" x-init="draw_bargraph(id, card.data, card.labels)"></canvas>
+          <canvas 
+            x-data="{ id: $id('canvas') }" 
+            :id="id" 
+            x-init="$nextTick(() => draw_bargraph(id, card.data, card.labels))"
+          ></canvas>
         </template>
         <template x-if="card.type == 'number'">
           <div class="h-full flex flex-col justify-between">
             <div class="py-3.5">
               <h1 x-text="card.value" class="text-primary-40 font-bold text-4xl"></h1>
-          <p class="text-neutral" x-text="card.subtitle"></p>
+              <p class="text-neutral" x-text="card.subtitle"></p>
             </div>
           
-          <div class="border-t pt-3 flex justify-between text-neutral">
-            <span>Período analisado</span>
-            <span class="flex items-center gap-x-2.5">
-              <span x-text="card.inicio"></span>
-              <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11.6422 4.31563L9.07969 1.06563C9.03296 1.00629 8.97339 0.958321 8.90547 0.925306C8.83755 0.892291 8.76302 0.875092 8.6875 0.875H7.675C7.57031 0.875 7.5125 0.995312 7.57656 1.07812L9.83125 3.9375H0.375C0.30625 3.9375 0.25 3.99375 0.25 4.0625V5C0.25 5.06875 0.30625 5.125 0.375 5.125H11.2484C11.6672 5.125 11.9 4.64375 11.6422 4.31563Z" fill="currentColor"/>
-              </svg>                              
-              <span x-text="card.fim"></span>
-            </span>
+            <div class="border-t pt-3 flex justify-between text-neutral">
+              <span class="text-ellipsis whitespace-nowrap overflow-hidden pr-2" title="Período analisado">Período analisado</span>
+              <span class="flex items-center gap-x-2.5 whitespace-nowrap">
+                <span x-text="card.inicio"></span>
+                <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6422 4.31563L9.07969 1.06563C9.03296 1.00629 8.97339 0.958321 8.90547 0.925306C8.83755 0.892291 8.76302 0.875092 8.6875 0.875H7.675C7.57031 0.875 7.5125 0.995312 7.57656 1.07812L9.83125 3.9375H0.375C0.30625 3.9375 0.25 3.99375 0.25 4.0625V5C0.25 5.06875 0.30625 5.125 0.375 5.125H11.2484C11.6672 5.125 11.9 4.64375 11.6422 4.31563Z" fill="currentColor"/>
+                </svg>                              
+                <span x-text="card.fim"></span>
+              </span>
+            </div>
           </div>
-        </div>
         </template>
 
         <template x-if="card.type == 'table'">
@@ -38,9 +42,9 @@
             <div class="flex gap-3.5 items-center py-2">
               <span class="text-neutral w-4" x-text="item.position"></span>
               <span 
-              class="w-10 h-10 rounded-full border place-content-center overflow-hidden" 
-              :class="item.position == 1 ? 'border-[#F08A00]' : ''"
-              x-html="item.img"
+                class="w-10 h-10 rounded-full border place-content-center overflow-hidden" 
+                :class="item.position == 1 ? 'border-[#F08A00]' : ''"
+                x-html="item.img"
               ></span>
               <span class="grow text-neutral-dark" x-text="item.name"></span>
               <span class="p-2 rounded-lg" :class="item.position == 1 ? 'bg-[#FFF7CD] text-[#F08A00]' : ''">
@@ -49,7 +53,6 @@
             </div>
           </template>
         </template>
-
       </div>
     </div>
   </template>
