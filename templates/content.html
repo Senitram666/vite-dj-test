@@ -10,17 +10,14 @@
       <nav class="flex flex-col space-y-2 p-4">
         <button @click="$store.tabs.state.mobileShowTabs = false"
           class="self-start text-sm text-gray-500 hover:text-gray-700 py-2 px-3">
-          <svg width="1em" height="1em" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.4 14L0 12.6L5.6 7L0 1.4L1.4 0L7 5.6L12.6 0L14 1.4L8.4 7L14 12.6L12.6 14L7 8.4L1.4 14Z"
-              fill="currentColor" />
-          </svg>
+          <span x-icon:close></span>
         </button>
         <template x-for="tab in $store.tabs.state.tabs" :key="tab.id">
           <button @click="activeTab = tab.id" :class="{
               'text-primary': activeTab === tab.id,
               'text-gray-500 hover:text-gray-700': activeTab !== tab.id
             }" class="py-2 px-3 text-sm font-medium flex items-center">
-            <span x-html="tab.icon"></span>
+            <span x-icon="tab.icon"></span>
             <span class="pl-3" x-text="tab.name"></span>
           </button>
         </template>
@@ -33,7 +30,7 @@
         <template x-for="tab in $store.tabs.state.tabs" :key="tab.id">
           <button @click="activeTab = tab.id" :class="{'border-b-2 border-blue-500 text-primary': activeTab === tab.id}"
             class="py-4 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 flex">
-            <span x-html="tab.icon"></span>
+            <span x-icon="tab.icon"></span>
             <span class="pl-3 text-ellipsis whitespace-nowrap overflow-hidden" x-text="tab.name"
               :title="tab.name"></span>
           </button>
@@ -45,11 +42,7 @@
     <div class="relative z-0 px-8">
       <div class="py-5 md:pt-0 flex">
         <button class="md:hidden grow-0" @click="$store.tabs.state.mobileShowTabs = true">
-          <svg height="1em" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M1 12C0.71667 12 0.479337 11.904 0.288004 11.712C0.0966702 11.52 0.000670115 11.2827 3.44827e-06 11C-0.000663218 10.7173 0.0953369 10.48 0.288004 10.288C0.48067 10.096 0.718003 10 1 10H17C17.2833 10 17.521 10.096 17.713 10.288C17.905 10.48 18.0007 10.7173 18 11C17.9993 11.2827 17.9033 11.5203 17.712 11.713C17.5207 11.9057 17.2833 12.0013 17 12H1ZM1 7C0.71667 7 0.479337 6.904 0.288004 6.712C0.0966702 6.52 0.000670115 6.28267 3.44827e-06 6C-0.000663218 5.71733 0.0953369 5.48 0.288004 5.288C0.48067 5.096 0.718003 5 1 5H17C17.2833 5 17.521 5.096 17.713 5.288C17.905 5.48 18.0007 5.71733 18 6C17.9993 6.28267 17.9033 6.52033 17.712 6.713C17.5207 6.90567 17.2833 7.00133 17 7H1ZM1 2C0.71667 2 0.479337 1.904 0.288004 1.712C0.0966702 1.52 0.000670115 1.28267 3.44827e-06 1C-0.000663218 0.717333 0.0953369 0.48 0.288004 0.288C0.48067 0.0960001 0.718003 0 1 0H17C17.2833 0 17.521 0.0960001 17.713 0.288C17.905 0.48 18.0007 0.717333 18 1C17.9993 1.28267 17.9033 1.52033 17.712 1.713C17.5207 1.90567 17.2833 2.00133 17 2H1Z"
-              fill="currentColor"></path>
-          </svg>
+          <span x-icon:bars></span>
         </button>
         <h1 class="py-2.5 grow text-center md:text-start" x-text="$store.tabs.state.activeTabName"></h1>
       </div>

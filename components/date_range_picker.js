@@ -5,7 +5,7 @@ export default (data) => ({
     get displayText() {
         const formatDate = (date) => new Date(date).toLocaleDateString('pt-BR');
         if (this.startDate && this.endDate) {
-            return `${formatDate(this.startDate)} - ${formatDate(this.endDate)}`;
+            return `${formatDate(this.startDate)} ⇀ ${formatDate(this.endDate)}`;
         }
         return '';
     },
