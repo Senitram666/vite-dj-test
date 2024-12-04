@@ -1,7 +1,7 @@
 {
-  "name": "vite-starter",
+  "name": "nucleo-decor",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -20,6 +20,7 @@
     "@alpinejs/collapse": "^3.14.3",
     "alpinejs": "^3.13.5",
     "chart.js": "^4.4.6",
-    "motion": "^10.17.0"
+    "motion": "^10.17.0",
+    "jwt-decode": "^4.0.0"
   }
 }

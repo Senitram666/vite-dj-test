@@ -1,110 +1,131 @@
+import { jwtDecode } from 'jwt-decode';
+
 export default {
   isAuthenticated: false,
   user: null,
+  accessToken: null,
+  refreshToken: null,
   
   init() {
-    this.isAuthenticated = localStorage.getItem('isAuthenticated') === 'true'
-    this.user = JSON.parse(localStorage.getItem('user'))
-    this.checkAuth()
+    this.accessToken = localStorage.getItem('access_token');
+    this.refreshToken = localStorage.getItem('refresh_token');
+    
+    if (this.accessToken) {
+      try {
+        const decoded = jwtDecode(this.accessToken);
+        this.user = decoded;
+        this.isAuthenticated = true;
+      } catch (error) {
+        this.logout();
+      }
+    }
+    
+    this.checkAuth();
   },
 
   async login(username, password) {
-    // Sample Django backend request
-    /*
     try {
-      const response = await fetch('/api/auth/login/', {
+      const response = await fetch('/api/token/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
-        credentials: 'include', // Required for Django CSRF
-      })
+      });
 
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.message || 'Login failed')
+        const error = await response.json();
+        throw new Error(error.detail || 'Login failed');
       }
 
-      const data = await response.json()
-      this.isAuthenticated = true
-      this.user = data.user
-      localStorage.setItem('isAuthenticated', 'true')
-      localStorage.setItem('user', JSON.stringify(data.user))
-      return data
+      const { access, refresh } = await response.json();
+      
+      // Store tokens
+      this.accessToken = access;
+      this.refreshToken = refresh;
+      localStorage.setItem('access_token', access);
+      localStorage.setItem('refresh_token', refresh);
+      
+      // Decode and store user info
+      const decoded = jwtDecode(access);
+      this.user = decoded;
+      this.isAuthenticated = true;
+      
+      window.location.reload();
     } catch (error) {
-      console.error('Login error:', error)
-      throw error
-    }
-    */
-
-    // Demo version without backend
-    if (username && password) {
-      this.isAuthenticated = true
-      this.user = { username }
-      localStorage.setItem('isAuthenticated', 'true')
-      localStorage.setItem('user', JSON.stringify(this.user))
-      window.location.reload()
+      console.error('Login error:', error);
+      throw error;
     }
   },
 
   async logout() {
-    // Sample Django backend request
-    /*
+    // Clean up tokens and state
+    this.isAuthenticated = false;
+    this.user = null;
+    this.accessToken = null;
+    this.refreshToken = null;
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    window.location.reload();
+  },
+
+  async refreshAccessToken() {
     try {
-      const response = await fetch('/api/auth/logout/', {
+      const response = await fetch('/api/token/refresh/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
-      })
+        body: JSON.stringify({
+          refresh: this.refreshToken
+        }),
+      });
 
       if (!response.ok) {
-        throw new Error('Logout failed')
+        throw new Error('Token refresh failed');
       }
-    } catch (error) {
-      console.error('Logout error:', error)
-    }
-    */
 
-    this.isAuthenticated = false
-    this.user = null
-    localStorage.removeItem('isAuthenticated')
-    localStorage.removeItem('user')
-    window.location.reload()
+      const { access } = await response.json();
+      this.accessToken = access;
+      localStorage.setItem('access_token', access);
+      
+      const decoded = jwtDecode(access);
+      this.user = decoded;
+      
+      return access;
+    } catch (error) {
+      this.logout();
+      throw error;
+    }
   },
 
   async checkAuth() {
-    // Sample Django backend request
-    /*
-    try {
-      const response = await fetch('/api/auth/verify/', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-
-      if (!response.ok) {
-        throw new Error('Authentication check failed')
-      }
-
-      const data = await response.json()
-      this.isAuthenticated = true
-      this.user = data.user
-      return true
-    } catch (error) {
-      console.error('Auth check error:', error)
-      this.isAuthenticated = false
-      this.user = null
-      localStorage.removeItem('isAuthenticated')
-      localStorage.removeItem('user')
-      return false
+    if (!this.accessToken) {
+      return false;
     }
-    */
 
-    return this.isAuthenticated
+    try {
+      const decoded = jwtDecode(this.accessToken);
+      const currentTime = Date.now() / 1000;
+      
+      // Check if token is expired or about to expire (within 5 minutes)
+      console.log('Check if token is expired or about to expire (within 5 minutes)')
+      if (decoded.exp < currentTime + 30) {
+        await this.refreshAccessToken();
+      }
+      console.log('Checked if token is expired or about to expire (within 5 minutes)')
+      
+      return true;
+    } catch (error) {
+      this.logout();
+      return false;
+    }
+  },
+
+  getAuthHeaders() {
+    return {
+      'Authorization': `Bearer ${this.accessToken}`,
+      'Content-Type': 'application/json',
+    };
   }
 }
