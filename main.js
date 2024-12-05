@@ -9,6 +9,7 @@ import dateRangePicker from './components/date_range_picker.js';
 import tabs from './components/store/tabs.js';
 import charts from './components/charts.js';
 import icons from './components/icons.js';
+import spinner from './components/ui/spinner.js';
 
 window.Alpine = Alpine;
 
@@ -23,6 +24,7 @@ Alpine.data('dashboard', dashboard);
 Alpine.data('dynamicTable', dynamicTable);
 Alpine.data('dateRangePicker', dateRangePicker);
 Alpine.data('charts', charts);
+Alpine.data('spinner', spinner);
 
 Alpine.plugin(icons)
 

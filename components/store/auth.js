@@ -35,7 +35,7 @@ export default {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.detail || 'Login failed');
+        throw new Error(error.detail || 'Credenciais inválidas');
       }
 
       const { access, refresh } = await response.json();
@@ -54,7 +54,7 @@ export default {
       window.location.reload();
     } catch (error) {
       console.error('Login error:', error);
-      throw error;
+      throw new Error('Credenciais inválidas');
     }
   },
 
@@ -108,12 +108,9 @@ export default {
       const decoded = jwtDecode(this.accessToken);
       const currentTime = Date.now() / 1000;
       
-      // Check if token is expired or about to expire (within 5 minutes)
-      console.log('Check if token is expired or about to expire (within 5 minutes)')
       if (decoded.exp < currentTime + 30) {
         await this.refreshAccessToken();
       }
-      console.log('Checked if token is expired or about to expire (within 5 minutes)')
       
       return true;
     } catch (error) {
@@ -128,4 +125,4 @@ export default {
       'Content-Type': 'application/json',
     };
   }
-}
+};

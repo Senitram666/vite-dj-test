@@ -1,5 +1,6 @@
 export default () => ({
   isRegistering: false,
+  isLoading: false,
   formData: {
     username: '',
     password: '',

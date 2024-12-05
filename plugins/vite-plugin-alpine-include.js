@@ -32,11 +32,11 @@ export default function alpineIncludePlugin() {
 
   return {
     name: 'alpine-include',
-    order: 'pre', // Replaces `enforce: 'pre'`
+    order: 'pre',
     transformIndexHtml: {
-      order: 'pre', // Ensures this runs early in the HTML transformation process
-      handler(html) { // Replaces `transform` with `handler`
-        return resolveIncludes(html); // Process all includes recursively
+      order: 'pre', 
+      handler(html) { 
+        return resolveIncludes(html); 
       },
     },
   };

@@ -31,7 +31,8 @@
                   <input
                     type="email"
                     x-model="formData.username"
-                    class="input"
+                    :disabled="isLoading"
+                    class="input disabled:opacity-50 disabled:cursor-not-allowed"
                     required
                   />
                 </div>
@@ -45,7 +46,8 @@
                   <input
                     type="password"
                     x-model="formData.password"
-                    class="input"
+                    :disabled="isLoading"
+                    class="input disabled:opacity-50 disabled:cursor-not-allowed"
                     required
                   />
                 </div>
@@ -56,8 +58,17 @@
                   class="text-red-600 text-sm"
                 ></div>
 
-                <button type="submit" class="btn btn-primary w-full">
-                  Entrar
+                <button 
+                  type="submit" 
+                  class="btn btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed" 
+                  :disabled="isLoading"
+                >
+                  <template x-if="isLoading">
+                    <div x-data="spinner" x-init="size = 'sm'">
+                      <div x-include="components/spinner.html"></div>
+                    </div>
+                  </template>
+                  <span>Entrar</span>
                 </button>
 
                 <div class="text-center">
@@ -67,7 +78,8 @@
                   <button
                     @click="toggleForm"
                     type="button"
-                    class="text-primary hover:underline login-instruction"
+                    :disabled="isLoading"
+                    class="text-primary hover:underline login-instruction disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Cadastrar
                   </button>
@@ -97,7 +109,8 @@
                     <input
                       type="text"
                       x-model="formData.firstName"
-                      class="input"
+                      :disabled="isLoading"
+                      class="input disabled:opacity-50 disabled:cursor-not-allowed"
                       required
                     />
                   </div>
@@ -110,7 +123,8 @@
                     <input
                       type="text"
                       x-model="formData.lastName"
-                      class="input"
+                      :disabled="isLoading"
+                      class="input disabled:opacity-50 disabled:cursor-not-allowed"
                       required
                     />
                   </div>
@@ -125,7 +139,8 @@
                   <input
                     type="email"
                     x-model="formData.username"
-                    class="input"
+                    :disabled="isLoading"
+                    class="input disabled:opacity-50 disabled:cursor-not-allowed"
                     required
                   />
                 </div>
@@ -139,7 +154,8 @@
                   <input
                     type="password"
                     x-model="formData.password"
-                    class="input"
+                    :disabled="isLoading"
+                    class="input disabled:opacity-50 disabled:cursor-not-allowed"
                     required
                   />
                 </div>
@@ -153,7 +169,8 @@
                   <input
                     type="password"
                     x-model="formData.confirmPassword"
-                    class="input"
+                    :disabled="isLoading"
+                    class="input disabled:opacity-50 disabled:cursor-not-allowed"
                     required
                   />
                 </div>
@@ -164,8 +181,17 @@
                   class="text-red-600 text-sm"
                 ></div>
 
-                <button type="submit" class="btn btn-primary w-full">
-                  Cadastrar
+                <button 
+                  type="submit" 
+                  class="btn btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  :disabled="isLoading"
+                >
+                  <template x-if="isLoading">
+                    <div x-data="spinner" x-init="size = 'sm'">
+                      <div x-include="components/spinner.html"></div>
+                    </div>
+                  </template>
+                  <span>Cadastrar</span>
                 </button>
 
                 <div class="text-center">
@@ -175,7 +201,8 @@
                   <button
                     @click="toggleForm"
                     type="button"
-                    class="text-primary hover:underline login-instruction"
+                    :disabled="isLoading"
+                    class="text-primary hover:underline login-instruction disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Entrar
                   </button>
