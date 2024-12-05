@@ -23,64 +23,33 @@ export default () => ({
   },
 
   async handleSubmit() {
-    if (this.isRegistering) {
-      if (!this.formData.username || !this.formData.password || !this.formData.confirmPassword || 
-          !this.formData.firstName || !this.formData.lastName) {
-        this.formData.error = 'Por favor, preencha todos os campos'
-        return
-      }
+    this.isLoading = true;
+    this.formData.error = '';
 
-      if (this.formData.password !== this.formData.confirmPassword) {
-        this.formData.error = 'As senhas não coincidem'
-        return
-      }
-
-      // Sample Django backend registration request
-      /*
-      try {
-        const response = await fetch('/api/auth/register/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: this.formData.username,
-            password: this.formData.password,
-            first_name: this.formData.firstName,
-            last_name: this.formData.lastName
-          }),
-          credentials: 'include',
-        })
-
-        if (!response.ok) {
-          const error = await response.json()
-          throw new Error(error.message || 'Registration failed')
+    try {
+      if (this.isRegistering) {
+        if (!this.formData.username || !this.formData.password || !this.formData.confirmPassword || 
+            !this.formData.firstName || !this.formData.lastName) {
+          throw new Error('Por favor, preencha todos os campos');
         }
 
-        const data = await response.json()
-        this.$store.auth.login(this.formData.username, this.formData.password)
-      } catch (err) {
-        this.formData.error = err.message || 'Registration failed'
-      }
-      */
+        if (this.formData.password !== this.formData.confirmPassword) {
+          throw new Error('As senhas não coincidem');
+        }
 
-      // Demo version without backend
-      try {
-        this.$store.auth.login(this.formData.username, this.formData.password)
-      } catch (err) {
-        this.formData.error = err.message || 'Registro falhou'
+        // Demo version without backend
+        await this.$store.auth.login(this.formData.username, this.formData.password);
+      } else {
+        if (!this.formData.username || !this.formData.password) {
+          throw new Error('Por favor, preencha todos os campos');
+        }
+        
+        await this.$store.auth.login(this.formData.username, this.formData.password);
       }
-    } else {
-      if (!this.formData.username || !this.formData.password) {
-        this.formData.error = 'Por favor, preencha todos os campos'
-        return
-      }
-      
-      try {
-        this.$store.auth.login(this.formData.username, this.formData.password)
-      } catch (err) {
-        this.formData.error = err.message || 'Login falhou'
-      }
+    } catch (err) {
+      this.formData.error = err.message || (this.isRegistering ? 'Registro falhou' : 'Login falhou');
+    } finally {
+      this.isLoading = false;
     }
   }
-})
+});

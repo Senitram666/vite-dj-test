@@ -25,6 +25,35 @@ export default {
 
   async login(username, password) {
     try {
+      /*
+      // For demo purposes, simulate a successful login
+      // Remove this block when connecting to a real backend
+      const demoToken = {
+        access: 'demo_access_token',
+        refresh: 'demo_refresh_token',
+        user: {
+          name: username.split('@')[0],
+          email: username,
+          type: 'Lojista'
+        }
+      };
+      
+      // Store tokens
+      this.accessToken = demoToken.access;
+      this.refreshToken = demoToken.refresh;
+      localStorage.setItem('access_token', demoToken.access);
+      localStorage.setItem('refresh_token', demoToken.refresh);
+      
+      // Store user info
+      this.user = demoToken.user;
+      this.isAuthenticated = true;
+      
+      window.location.reload();
+      return;
+      */
+
+      // Real API implementation (commented out for now)
+      // /*
       const response = await fetch('/api/token/', {
         method: 'POST',
         headers: {
