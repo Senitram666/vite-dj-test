@@ -32,9 +32,7 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       include: ['alpinejs'],
       force: true,
-      entries: [
-        './index.html'
-      ],
+      entries: ['./index.html'],
     },
     server: {
       proxy: {
@@ -45,8 +43,8 @@ export default defineConfig(({ mode }) => {
         },
       },
       hmr: {
-        overlay: false
-      }
+        overlay: true,
+      },
     },
     plugins: [alpineIncludePlugin()],
   };

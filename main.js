@@ -26,7 +26,7 @@ Alpine.data('dateRangePicker', dateRangePicker);
 Alpine.data('charts', charts);
 Alpine.data('spinner', spinner);
 
-Alpine.plugin(icons)
+Alpine.plugin(icons);
 
 // Initialize auth store
 document.addEventListener('alpine:init', () => {

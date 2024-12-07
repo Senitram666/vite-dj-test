@@ -4,7 +4,6 @@
       <div class="container mx-auto px-4 py-3">
         <div class="flex justify-between items-center">
           <div class="flex items-center space-x-4 text-white">
-            <!-- <img src="/logo-mobile-white.png" alt="Logo" class="block md:hidden h-8 w-auto" /> -->
             <img src="/logo-white.png" alt="Logo" class="hidden md:block h-8 w-auto" />
             <div>
               <span
@@ -25,9 +24,7 @@
                 @click="open = !open"
                 class="p-2 hover:bg-primary-dark rounded-full"
               >
-                
                 <span x-icon:bell class="text-xl text-white"></span>
-                  
               </button>
               <div
                 x-show="open"
@@ -60,8 +57,7 @@
                 @click="open = !open"
                 class="p-2 bg-primary-light hover:bg-primary-dark rounded-full"
               >
-              <span x-icon:user class="text-xl text-white"></span>
-                
+                <span x-icon:user class="text-xl text-white"></span>
               </button>
               <div
                 x-show="open"
@@ -69,17 +65,17 @@
                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
               >
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                  <i class="fas fa-key mr-2"></i> Manage Password
+                  <i class="fas fa-key mr-2"></i> Gerenciar Senha
                 </a>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                  <i class="fas fa-user-cog mr-2"></i> Manage Profile
+                  <i class="fas fa-user-cog mr-2"></i> Gerenciar Perfil
                 </a>
                 <hr class="my-2" />
                 <button
                   @click="logout"
                   class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600"
                 >
-                  <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                  <i class="fas fa-sign-out-alt mr-2"></i> Sair
                 </button>
               </div>
             </div>
