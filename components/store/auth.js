@@ -25,35 +25,6 @@ export default {
 
   async login(username, password) {
     try {
-      /*
-      // For demo purposes, simulate a successful login
-      // Remove this block when connecting to a real backend
-      const demoToken = {
-        access: 'demo_access_token',
-        refresh: 'demo_refresh_token',
-        user: {
-          name: username.split('@')[0],
-          email: username,
-          type: 'Lojista'
-        }
-      };
-      
-      // Store tokens
-      this.accessToken = demoToken.access;
-      this.refreshToken = demoToken.refresh;
-      localStorage.setItem('access_token', demoToken.access);
-      localStorage.setItem('refresh_token', demoToken.refresh);
-      
-      // Store user info
-      this.user = demoToken.user;
-      this.isAuthenticated = true;
-      
-      window.location.reload();
-      return;
-      */
-
-      // Real API implementation (commented out for now)
-      // /*
       const response = await fetch('/api/token/', {
         method: 'POST',
         headers: {
@@ -79,6 +50,9 @@ export default {
       const decoded = jwtDecode(access);
       this.user = decoded;
       this.isAuthenticated = true;
+
+      // Set initial site based on role
+      window.Alpine.store('site').setSiteFromRole(decoded.role);
       
       window.location.reload();
     } catch (error) {
@@ -88,7 +62,6 @@ export default {
   },
 
   async logout() {
-    // Clean up tokens and state
     this.isAuthenticated = false;
     this.user = null;
     this.accessToken = null;
@@ -120,6 +93,13 @@ export default {
       
       const decoded = jwtDecode(access);
       this.user = decoded;
+
+      // Validate site access after token refresh
+      const siteStore = window.Alpine.store('site');
+      if (!siteStore.validateSiteAccess(decoded.role)) {
+        this.logout();
+        throw new Error('Invalid site access');
+      }
       
       return access;
     } catch (error) {

@@ -12,7 +12,7 @@
               ></span>
               <span
                 class="text-xs ml-2 align-text-top hidden md:block"
-                x-text="$store.auth.user?.type || 'Lojista'"
+                x-text="$store.auth.user?.role || 'Indefinido'"
               ></span>
             </div>
           </div>
@@ -64,6 +64,22 @@
                 @click.away="open = false"
                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
               >
+                <!-- Admin Site Switcher -->
+                <template x-if="$store.auth.user?.role?.toLowerCase() === 'admin'">
+                  <div class="px-4 py-2 border-b border-gray-200">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Ver como:</label>
+                    <select 
+                      @change="$store.site.switchSite($event.target.value)"
+                      class="w-full text-sm border-gray-300 rounded-md"
+                      x-model="$store.site.state.currentSite"
+                    >
+                      <option value="admin">Admin</option>
+                      <option value="lojista">Lojista</option>
+                      <option value="arquiteto">Arquiteto</option>
+                    </select>
+                  </div>
+                </template>
+
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">
                   <i class="fas fa-key mr-2"></i> Gerenciar Senha
                 </a>
