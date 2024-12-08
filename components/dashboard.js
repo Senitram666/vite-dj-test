@@ -2,7 +2,7 @@ import { animate, spring } from 'motion';
 
 export default () => ({
   previousTab: null,
-  activeTab: 'dashboard',
+  activeTab: null,
   dashboardCards: [
     { 
       id: 1, 
@@ -69,6 +69,8 @@ export default () => ({
   ],
 
   init() {
+    this.activeTab = window.Alpine.store('tabs').state.activeTab;
+    
     this.$watch('$store.tabs.state.activeTab', (value, oldValue) => {
       this.previousTab = oldValue;
       this.$nextTick(() => {

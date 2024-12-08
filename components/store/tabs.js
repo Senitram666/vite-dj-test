@@ -9,7 +9,7 @@ const ROLE_TABS = {
     { id: 'campanhas', name: 'Campanhas Bônus', icon: 'campanhas_icon' }
   ],
   arquiteto: [
-    { id: 'dashboard_arq', name: 'Dashboard', icon: 'dashboard_icon' },
+    { id: 'dashboard_arq', name: 'Dashboard Arquiteto', icon: 'dashboard_icon' },
     { id: 'projetos', name: 'Meus Projetos', icon: 'projetos_icon' },
     { id: 'pontos', name: 'Meus Pontos', icon: 'pontos_icon' },
     { id: 'experiencias', name: 'Experiências', icon: 'experiencias_icon' },
@@ -38,8 +38,8 @@ export default {
 
   initializeTabs() {
     const site = window.Alpine.store('site').state.currentSite;
-    const auth = window.Alpine.store('auth');
-    const role = auth.user?.role?.toLowerCase();
+    // const auth = window.Alpine.store('auth');
+    // const role = auth.user?.role?.toLowerCase();
 
     // Set tabs based on current site or admin role
     // if (role === 'admin') {
