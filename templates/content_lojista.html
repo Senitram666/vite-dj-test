@@ -1,0 +1,21 @@
+<div x-data="charts">
+    <!-- Dashboard -->
+    <div data-tab="dashboard" :style="activeTab === 'dashboard' ? '' : 'display: none'"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-include="dashboard.html"></div>
+
+    <!-- Pedidos -->
+    <div data-tab="pedidos" :style="activeTab === 'pedidos' ? '' : 'display: none'"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-include="pedidos.html"></div>
+
+    <!-- Arquitetos -->
+    <div data-tab="arquitetos" :style="activeTab === 'arquitetos' ? '' : 'display: none'"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-include="arquitetos.html"></div>
+
+    <!-- Experiencias -->
+    <div data-tab="experiencias" :style="activeTab === 'experiencias' ? '' : 'display: none'"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-include="experiencias.html"></div>
+
+    <!-- Campanhas -->
+    <div data-tab="campanhas" :style="activeTab === 'campanhas' ? '' : 'display: none'"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" x-include="campanhas.html"></div>
+</div>
