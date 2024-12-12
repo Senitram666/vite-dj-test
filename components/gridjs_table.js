@@ -2,6 +2,7 @@ import { Grid } from "gridjs";
 import { ptBR } from "gridjs/l10n";
 import { h } from "gridjs";
 import { PluginPosition } from "gridjs";
+import { RowSelection } from "gridjs/plugins/selection";
 // import "gridjs/dist/theme/mermaid.css";
 
 
@@ -21,11 +22,27 @@ export default (endpoint, container) => ({
     },
     init() {
         this.grid = new Grid({
+          // height: '500px',
+          // fixedHeader: true,
             server: {
                 url: 'https://swapi.dev/api/people/',
-                then: data => data.results.map(person => [person.name, person.gender, person.birth_year, person.created]),
+                then: data => data.results.map(person => [person.name, person.gender, person.birth_year]),
                 total: data => data.count
               },
+            columns: [
+              {
+                id: 'selectRow',
+                name: 'Select',
+                data: () => true, 
+                plugin: {
+                  component: RowSelection,
+                },
+                sort: false,
+              },
+              "Name", 
+              "Email", 
+              "Phone Number"
+            ],
             pagination: {
                 server: {
                   url: (prev, page) => {
@@ -68,22 +85,26 @@ export default (endpoint, container) => ({
             //     error: 'teste',
             // },
 
-            plugins: [{
+            plugins: [
+              {
                 id: 'title',
                 component: this.MyPlugin,
                 position: PluginPosition.Header,
                 order: 1
-            }],
+              }
+            ],
             language: ptBR
           });
        
       console.log(this.grid);
-      console.log(container);
     //   this.headers = Object.keys(this.rows[0]);
-      this.grid.updateConfig({
-        columns: ['#',"Name", "Email", "Phone Number"],
-        
-      }).render(container);
+      this.grid.render(container);
+      this.grid.on('ready', () => {
+        // find the plugin with the give plugin ID
+        const checkboxPlugin = grid.config.plugin.get('selectRow');
+        // read the selected rows from the plugin's store
+        console.log('selected rows:', checkboxPlugin.props.store.state);
+      })
     },
     
   })

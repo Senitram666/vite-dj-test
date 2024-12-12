@@ -1,4 +1,9 @@
 @layer components {
+  .gridjs *,
+.gridjs :after,
+.gridjs :before {
+  @apply box-border;
+}
   .gridjs-wrapper {
     @apply block w-full relative z-10 overflow-auto 
            border-t border-gray-200 rounded-t-lg 
@@ -10,11 +15,7 @@
   }
 
   .gridjs-head {
-    @apply w-full mb-1 py-1 px-px;
-  }
-
-  .gridjs-head:after {
-    @apply clear-both content-none block;
+    @apply w-full mb-1 py-1 px-px after:clear-both after:content-[''] after:block;
   }
 
   .gridjs-head:empty {
@@ -48,6 +49,13 @@
            relative box-border
            outline-none;
   }
+  th.gridjs-th:first-child{
+    @apply border-l-0
+  }
+
+  th.gridjs-th:last-child{
+    @apply border-r-0
+  }
 
   th.gridjs-th-sort {
     @apply cursor-pointer hover:bg-gray-100 focus:bg-gray-100;
@@ -57,13 +65,24 @@
     @apply float-left overflow-hidden text-ellipsis w-full;
   }
 
-  .gridjs-th-sort .gridjs-th-content {
+  th.gridjs-th-sort .gridjs-th-content {
     @apply w-[calc(100%-15px)];
+  }
+
+  th.gridjs-th-fixed {
+    @apply sticky shadow-[0_1px_0_0_rgba(229,231,235,1)];
+  }
+
+  .gridjs-tbody {
+    @apply bg-white;
   }
 
   .gridjs-td {
     @apply bg-white border border-gray-200 
            box-content px-6 py-3;
+  }
+  .gridjs-td .gridjs-checkbox {
+    @apply cursor-pointer block m-auto;
   }
 
   .gridjs-td:first-child {
@@ -73,6 +92,13 @@
   .gridjs-td:last-child {
     @apply border-r-0;
   }
+  td.gridjs-message {
+    @apply text-center;
+  }
+
+  .gridjs-tr {
+    @apply border-0;
+  }
 
   .gridjs-tr-selected td {
     @apply bg-blue-100;
@@ -80,6 +106,16 @@
 
   .gridjs-tr:last-child td {
     @apply border-b-0;
+  }
+
+  .gridjs-search {
+    @apply float-left;
+  }
+  .gridjs-search-input {
+    @apply w-60; 
+  }
+  .gridjs-temp {
+    @apply relative;
   }
 
   .gridjs-footer {
@@ -94,8 +130,13 @@
     @apply border-none p-0;
   }
 
+  .gridjs-footer button,
+  .gridjs-head button {
+    @apply bg-transparent bg-none border-none cursor-pointer m-0 p-0 outline-none;
+  }
+
   .gridjs-pagination {
-    @apply text-gray-700 relative;
+    @apply text-gray-700 after:clear-both after:content-[''] after:block;
   }
 
   .gridjs-pagination .gridjs-summary {
@@ -107,11 +148,12 @@
   }
 
   .gridjs-pagination .gridjs-pages button {
-    @apply bg-white border border-gray-300 
-           border-r-0 px-4 py-2 
+    @apply bg-white border border-gray-300 border-solid
+           border-r-0 px-3.5 py-1.5 
            select-none outline-none 
            hover:bg-gray-50 
            disabled:bg-white 
+           disabled:hover:bg-white 
            disabled:text-gray-400 
            disabled:cursor-default;
   }
@@ -127,37 +169,23 @@
   }
 
   .gridjs-pagination .gridjs-pages button:last-child {
-    @apply border-r rounded-r-md;
+    @apply border-r rounded-r-md focus:mr-0;
   }
 
   .gridjs-pagination .gridjs-pages button.gridjs-currentPage {
     @apply bg-gray-100 font-bold;
   }
+  .gridjs-pagination .gridjs-pages button.gridjs-spread {
+    @apply bg-white shadow-none cursor-default focus:ring-0;
+  }
 
-  .gridjs-sort {
+  button.gridjs-sort {
     @apply bg-transparent border-none 
            cursor-pointer float-right 
-           w-3.5 h-6 
-           outline-none;
+           w-3 h-6 p-0 m-0 outline-none 
+           bg-no-repeat bg-contain bg-center;
   }
-
-  .gridjs-sort:focus {
-    @apply outline-none;
-  }
-  button.gridjs-sort {
-    background-color: transparent;
-    background-position-x: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    border: none;
-    cursor: pointer;
-    float: right;
-    height: 24px;
-    margin: 0;
-    outline: none;
-    padding: 0;
-    width: 13px;
-  }
+  
   button.gridjs-sort-neutral {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDEuOTk4IiBoZWlnaHQ9IjQwMS45OTgiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQwMS45OTggNDAxLjk5OCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTczLjA5MiAxNjQuNDUyaDI1NS44MTNjNC45NDkgMCA5LjIzMy0xLjgwNyAxMi44NDgtNS40MjQgMy42MTMtMy42MTYgNS40MjctNy44OTggNS40MjctMTIuODQ3cy0xLjgxMy05LjIyOS01LjQyNy0xMi44NUwyMTMuODQ2IDUuNDI0QzIxMC4yMzIgMS44MTIgMjA1Ljk1MSAwIDIwMC45OTkgMHMtOS4yMzMgMS44MTItMTIuODUgNS40MjRMNjAuMjQyIDEzMy4zMzFjLTMuNjE3IDMuNjE3LTUuNDI0IDcuOTAxLTUuNDI0IDEyLjg1IDAgNC45NDggMS44MDcgOS4yMzEgNS40MjQgMTIuODQ3IDMuNjIxIDMuNjE3IDcuOTAyIDUuNDI0IDEyLjg1IDUuNDI0ek0zMjguOTA1IDIzNy41NDlINzMuMDkyYy00Ljk1MiAwLTkuMjMzIDEuODA4LTEyLjg1IDUuNDIxLTMuNjE3IDMuNjE3LTUuNDI0IDcuODk4LTUuNDI0IDEyLjg0N3MxLjgwNyA5LjIzMyA1LjQyNCAxMi44NDhMMTg4LjE0OSAzOTYuNTdjMy42MjEgMy42MTcgNy45MDIgNS40MjggMTIuODUgNS40MjhzOS4yMzMtMS44MTEgMTIuODQ3LTUuNDI4bDEyNy45MDctMTI3LjkwNmMzLjYxMy0zLjYxNCA1LjQyNy03Ljg5OCA1LjQyNy0xMi44NDggMC00Ljk0OC0xLjgxMy05LjIyOS01LjQyNy0xMi44NDctMy42MTQtMy42MTYtNy44OTktNS40Mi0xMi44NDgtNS40MnoiLz48L3N2Zz4=");
     background-position-y: center;
@@ -174,13 +202,17 @@
     background-size: 10px;
   }
 
+  .gridjs-sort:focus {
+    @apply outline-none;
+  }
+
   /* Loading bar animation */
-  .gridjs-loading-bar {
-    @apply absolute inset-0 bg-white opacity-50 z-10;
+  /* .gridjs-loading-bar {
+    @apply absolute inset-0 bg-white opacity-50 z-20;
   }
 
   .gridjs-loading-bar:after {
-    @apply absolute inset-0 content-none
+    @apply absolute inset-0 content-['']
            animate-[shimmer_2s_infinite]
            bg-gradient-to-r from-transparent 
            via-gray-200/20 to-transparent 
@@ -191,6 +223,37 @@
     to {
       @apply translate-x-full;
     }
+  } */
+
+  .gridjs-loading-bar {
+    background-color: #fff;
+    opacity: 0.5;
+    z-index: 50;
+  }
+  .gridjs-loading-bar,
+  .gridjs-loading-bar:after {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .gridjs-loading-bar:after {
+    animation: shimmer 2s infinite;
+    background-image: linear-gradient(
+      90deg,
+      hsla(0, 0%, 80%, 0),
+      hsla(0, 0%, 80%, 0.2) 20%,
+      hsla(0, 0%, 80%, 0.5) 60%,
+      hsla(0, 0%, 80%, 0)
+    );
+    content: "";
+    transform: translateX(-100%);
+  }
+  @keyframes shimmer {
+    to {
+      transform: translateX(100%);
+    }
   }
 
   /* Resizable column */
@@ -199,6 +262,6 @@
   }
 
   .gridjs-resizable:hover {
-    @apply bg-blue-300 cursor-col-resize;
+    @apply bg-blue-300 cursor-ew-resize;
   }
 }
