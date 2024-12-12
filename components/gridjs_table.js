@@ -17,7 +17,7 @@ export default (endpoint, container) => ({
     filteredRows: [],
     MyPlugin() {
         return h('h1', { 
-            class: 'text-xl font-bold mb-4' 
+            class: 'order-1 text-xl font-bold py-2 px-4' 
         }, 'Your Table Title');
     },
     init() {
@@ -62,17 +62,17 @@ export default (endpoint, container) => ({
               }
             },
             sort: true,
-            // className: {
+            className: {
             //     container: 'card',
             //     table : 'w-full table-auto',
-            //     tr : 'odd:bg-neutral-10 even:bg-white',
-            //     td: 'text-center text-neutral-60 p-2',
-            //     th : 'bg-white py-2 font-medium text-sm text-neutral-70',
-            //     header : 'header',
+                tr : 'odd:bg-neutral-10 even:bg-white',
+                td: 'text-center text-neutral-60 p-2 bg-transparent',
+                th : 'bg-white py-2 font-medium text-sm text-neutral-70',
+                header : 'flex',
             //     footer : 'teste',
             //     thead : 'teste',
             //     tbody : 'teste',
-            //     search : 'teste',
+                search : 'order-2',
             //     sort : 'teste',
             //     pagination : 'teste',
             //     paginationSummary : 'teste',
@@ -83,7 +83,7 @@ export default (endpoint, container) => ({
             //     loading : 'teste',
             //     notfound : 'teste',
             //     error: 'teste',
-            // },
+            },
 
             plugins: [
               {
