@@ -51,8 +51,8 @@ export default {
 
     if (site) {
       this.state.tabs = ROLE_TABS[site];
-      this.setActiveTab(this.state.tabs[0].id);
-    }
+      this.setActiveTab(this.state.tabs[1].id);
+    }// FIXME set back to tabs[0] after finalizing testing
     
 
     // Update active tab name

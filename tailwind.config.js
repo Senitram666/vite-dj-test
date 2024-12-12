@@ -18,7 +18,10 @@ export default {
         neutral: {
           DEFAULT: '#667085',
           dark: '#475467',
-          light: '#B9BEC9'
+          light: '#B9BEC9',
+          10: '#F9FAFB',
+          60: '#475467',
+          70: '#344054',
         }
       },
       fontFamily: {
@@ -29,7 +32,9 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
   future: {
     removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,

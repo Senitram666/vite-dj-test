@@ -1,6 +1,9 @@
+@import "./components/gridjs.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
   --color-primary: #00577D;
@@ -14,6 +17,11 @@
   [x-cloak] {
     display: none !important;
   }
+
+  [type='search']{
+    @apply rounded
+  }
+
 }
 
 @layer components {
