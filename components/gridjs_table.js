@@ -1,4 +1,4 @@
-import { Grid } from "gridjs";
+import { Grid, html } from "gridjs";
 import { ptBR } from "gridjs/l10n";
 import { h } from "gridjs";
 import { PluginPosition } from "gridjs";
@@ -40,7 +40,10 @@ export default (endpoint, container) => ({
                 sort: false,
               },
               "Name", 
-              "Email", 
+              {
+                name:"Gender",
+                formatter: (cell, row) => html(`<span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">${cell}</span>`)
+              }, 
               "Phone Number"
             ],
             pagination: {
