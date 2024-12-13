@@ -15,10 +15,20 @@ export default (endpoint, container) => ({
     headers: [],
     search: false,
     filteredRows: [],
-    MyPlugin() {
+    TableTitlePlugin() {
         return h('h1', { 
-            class: 'order-1 text-xl font-bold py-2 px-4' 
+            class: 'order-1 text-base font-semibold py-2 text-neutral-70 grow' 
         }, 'Your Table Title');
+    },
+    NewButtonPlugin() {
+        return h('button', { 
+            class: 'order-6 text-base text-white !bg-primary rounded w-11 add-item-btn'
+        }, '');
+    },
+    ExportButtonPlugin() {
+        return h('button', { 
+            class: 'order-5 text-base !border !border-gray-300 text-primary !bg-white rounded w-11 export-item-btn'
+        }, '');
     },
     init() {
         this.grid = new Grid({
@@ -66,19 +76,19 @@ export default (endpoint, container) => ({
             },
             sort: true,
             className: {
-            //     container: 'card',
+                container: 'card p-0',
             //     table : 'w-full table-auto',
                 tr : 'odd:bg-neutral-10 even:bg-white',
-                td: 'text-center text-neutral-60 p-2 bg-transparent',
-                th : 'bg-white py-2 font-medium text-sm text-neutral-70',
-                header : 'flex',
-            //     footer : 'teste',
+                td: 'text-center text-neutral-60 p-2 bg-transparent border-0',
+                th : '!bg-white py-2 font-medium text-sm text-neutral-70 !border-0 text-center',
+                header : 'flex gap-2 m-0 py-2 px-4',
+                footer : 'border-0 border-t',
             //     thead : 'teste',
             //     tbody : 'teste',
                 search : 'order-2',
             //     sort : 'teste',
             //     pagination : 'teste',
-            //     paginationSummary : 'teste',
+                // paginationSummary : '!float-right',
             //     paginationButton : 'teste',
             //     paginationButtonNext : 'teste',
             //     paginationButtonCurrent : 'teste',
@@ -91,12 +101,35 @@ export default (endpoint, container) => ({
             plugins: [
               {
                 id: 'title',
-                component: this.MyPlugin,
+                component: this.TableTitlePlugin,
                 position: PluginPosition.Header,
                 order: 1
+              },
+              {
+                id: 'add',
+                component: this.NewButtonPlugin,
+                position: PluginPosition.Header,
+                order: 6
+              },
+              {
+                id: 'export',
+                component: this.ExportButtonPlugin,
+                position: PluginPosition.Header,
+                order: 5
               }
             ],
-            language: ptBR
+            language: {
+              ...ptBR,
+              search: {
+                ...ptBR.search,
+                placeholder: 'Buscar'
+              },
+              pagination: {
+                ...ptBR.pagination,
+                previous: '<',
+                next: '>'
+              }
+            }
           });
        
       console.log(this.grid);
