@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 export default {
   isAuthenticated: false,
   user: null,
-  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoiTFVDQVMgTUFSVElORVMiLCJyb2xlIjoiQWRtaW4iLCJleHAiOjE3MzY1MjMzMDksInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MzM5MzEzMDl9.BQwwiho4XS8XTb-fCyOZnzE8itSYlqZmqiDr1IBE-OM',
+  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJuYW1lIjoiTFVDQVMgTUFSVElORVMiLCJyb2xlIjoiQWRtaW4iLCJleHAiOjE3NDE4MDUxMjcsInRva2VuX3R5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3MzkyMTMxMjd9.ezhnQuxOgDPsUDpTS359-Ey0J1pbLLfybyJgEGy5PKA',
   refreshToken: null,
   
   init() { //FIXME remove debug accessToken and return normal behavior after testing 
