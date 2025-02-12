@@ -18,7 +18,7 @@ export default (endpoint, container) => ({
     TableTitlePlugin() {
         return h('h1', { 
             class: 'order-1 text-base font-semibold py-2 text-neutral-70 grow' 
-        }, 'Your Table Title');
+        }, 'Pedidos');
     },
     NewButtonPlugin() {
         return h('button', { 
@@ -34,27 +34,40 @@ export default (endpoint, container) => ({
         this.grid = new Grid({
           // height: '500px',
           // fixedHeader: true,
+
+        //   {
+        //     "id": 21,
+        //     "cod_pedido": "63201060",
+        //     "data_do_pedido": "2024-12-30",
+        //     "arquiteto": "João Santos",
+        //     "total": "3767.00",
+        //     "status": "Concluido"
+        // }
+
             server: {
-                url: 'https://swapi.dev/api/people/',
-                then: data => data.results.map(person => [person.name, person.gender, person.birth_year]),
+                url: 'http://localhost:8000/api/orders/',
+                then: data => data.results.map(order => [order.id, order.cod_pedido, order.data_do_pedido, order.arquiteto, order.total, order.status]),
                 total: data => data.count
               },
             columns: [
+              // {
+              //   id: 'selectRow',
+              //   name: 'Select',
+              //   data: () => true, 
+              //   plugin: {
+              //     component: RowSelection,
+              //   },
+              //   sort: false,
+              // },
+              "ID",
+              "Código", 
+              "Data do Pedido",
+              "Arquiteto",
+              "Total",
               {
-                id: 'selectRow',
-                name: 'Select',
-                data: () => true, 
-                plugin: {
-                  component: RowSelection,
-                },
-                sort: false,
-              },
-              "Name", 
-              {
-                name:"Gender",
+                name:"Status",
                 formatter: (cell, row) => html(`<span class="inline-flex items-center rounded-md bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10">${cell}</span>`)
               }, 
-              "Phone Number"
             ],
             pagination: {
                 server: {
@@ -74,7 +87,22 @@ export default (endpoint, container) => ({
             }
               }
             },
-            sort: true,
+            sort: {
+              multiColumn: false,
+              server: {
+                url: (prev, columns) => {
+                  if (!columns.length) return prev;
+                  
+                  const col = columns[0];
+                  const dir = col.direction === 1 ? '' : '-';
+                  let colName = ["id", "cod_pedido", "data_do_pedido", "arquiteto", "total", "status"][col.index];
+                  
+                  return prev.includes('?')
+                  ? `${prev}&ordering=${dir}${colName}`
+                  : `${prev}?ordering=${dir}${colName}`;
+                }
+              }
+            },
             className: {
                 container: 'card p-0',
             //     table : 'w-full table-auto',
