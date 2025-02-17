@@ -5,11 +5,11 @@ export const TABLE_CONFIGS = {
         columns: [
             {
                 id: 'ID',
-              name: html(`<input class="rounded" type="checkbox" value="All" x-model="selectedAll"> <span class="text-sm text-gray-500">ID</span>`),
+              name: html(`<input class="rounded" type="checkbox" value="all" x-model="selectedAll" @click.stop='' @change='selectedRows = selectedAll.length ? [...availableRows] : []'> <span @click.stop='' class="pl-3 text-sm text-gray-500">ID</span>`),
               sort: false,
               formatter: (cell, row) => {
                 // console.log(row)
-                const input = `<input class="rounded" type="checkbox" value="${cell}" x-model="selectedRows"> <span class="text-sm text-gray-500">${cell}</span>`;
+                const input = `<input class="rounded" type="checkbox" value="${cell}" data-track="${cell}" x-model="selectedRows"> <span class="pl-3 text-sm text-gray-500">${cell}</span>`;
                 return html(input);
             }
             },

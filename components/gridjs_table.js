@@ -1,9 +1,9 @@
 import { Grid } from "gridjs";
 import { ptBR } from "gridjs/l10n";
-import { h } from "gridjs";
-import { PluginPosition } from "gridjs";
-import { useConfig } from "gridjs";
-import { RowSelection } from "gridjs/plugins/selection";
+// import { h } from "gridjs";
+// import { PluginPosition } from "gridjs";
+// import { useConfig } from "gridjs";
+// import { RowSelection } from "gridjs/plugins/selection";
 import { TABLE_CONFIGS } from './table-configs';
 // import "gridjs/dist/theme/mermaid.css";
 
@@ -19,6 +19,8 @@ export default (endpoint, container) => ({
   startDate: '',
   endDate: '',
   selectedRows: [],
+  availableRows: [],
+  selectedAll: [],
   get displayText_datePicker() {
     const formatDate = (date) => new Date(`${date}T12:00:00Z`).toLocaleDateString('pt-BR');
     if (this.startDate && this.endDate) {
@@ -89,12 +91,20 @@ export default (endpoint, container) => ({
       }
     }).forceRender();
   },
-  // ExportButtonPlugin() {
-  //   return h('button', {
-  //     class: 'order-5 text-base !border !border-gray-300 text-primary !bg-white rounded w-11 export-item-btn',
-  //     'x-on:click': "alert('Hello World!')"
-  //   }, '');
-  // },
+  updateTrackedElements() {
+    // Get all inputs with data-track attribute
+    const currentElements = [...this.$root.querySelectorAll('[data-track]')];
+    this.availableRows = currentElements.map(el => el.dataset.track);
+    this.validateSelections();
+  },
+  validateSelections() {
+    // Remove any selected values that are no longer in availableRows
+    this.selectedRows = this.selectedRows.filter(value => 
+      this.availableRows.includes(value)
+    );    
+    // Check if all tracked values are selected
+    this.selectedAll = this.selectedRows.length === this.availableRows.length ? ['all'] : [];
+  },
   init() {
     if (!this.config) {
       console.error(`No configuration found for endpoint: ${this.endpoint}`);
@@ -136,8 +146,10 @@ export default (endpoint, container) => ({
             if (!columns.length) return prev;
 
             const col = columns[0];
+            if (col.index === 0) return prev;
             const dir = col.direction === 1 ? '' : '-';
             let colName = this.config.serverConfig.sortColumns[col.index];
+            if (colName == undefined) return prev;
 
             return prev.includes('?')
               ? `${prev}&ordering=${dir}${colName}`
@@ -203,17 +215,45 @@ export default (endpoint, container) => ({
     });
 
 
-    console.log(this.config);
-    console.log(this.grid);
+    // console.log(this.config);
+    // console.log(this.grid);
     this.grid.render(container);
     this.grid.on('ready', () => {
-      console.log('TEESTE');
-      // find the plugin with the give plugin ID
-      // const checkboxPlugin = grid.config.plugin.get('selectRow');
-      // read the selected rows from the plugin's store
-      // console.log('selected rows:', checkboxPlugin.props.store.state);
-
+      this.updateTrackedElements();
     })
+
+
+    this.updateTrackedElements();
+    const observer = new MutationObserver((mutations) => {
+      // Check if any mutation involves data-track elements
+      const shouldUpdate = mutations.some(mutation => {
+        // Check added nodes
+        const hasAddedTrackNodes = Array.from(mutation.addedNodes).some(node => 
+          node.nodeType === 1 && (
+            node.hasAttribute('data-track') || 
+            node.querySelector('[data-track]')
+          )
+        );
+        
+        // Check removed nodes
+        const hasRemovedTrackNodes = Array.from(mutation.removedNodes).some(node =>
+          node.nodeType === 1 && (
+            node.hasAttribute('data-track') || 
+            node.querySelector('[data-track]')
+          )
+        );
+        
+        return hasAddedTrackNodes || hasRemovedTrackNodes;
+      });
+      
+      if (shouldUpdate) {
+        this.updateTrackedElements();
+      }
+    });
+      observer.observe(this.$root, {
+        childList: true,
+        subtree: true
+      });
   },
 
 })

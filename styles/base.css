@@ -86,4 +86,17 @@
   .gridjs-wrapper td:first-child{
     @apply text-start pl-4;
   }
+  .gridjs-wrapper th:first-child{
+    @apply text-start pl-4;
+  }
+  // HACK: Hide the sort button on the first and last column because ForceRender is showing where it should not
+  .gridjs-wrapper th:first-child button, .gridjs-wrapper th:last-child button{
+    @apply hidden w-0 h-0;
+  }
+  .gridjs-wrapper th:first-child, .gridjs-wrapper th:last-child{
+    @apply cursor-default;
+  }
+  th:first-child.gridjs-th-sort .gridjs-th-content, th:last-child.gridjs-th-sort .gridjs-th-content{
+    @apply w-full;
+  }
 }

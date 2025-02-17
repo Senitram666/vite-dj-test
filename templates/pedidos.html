@@ -1,61 +1,8 @@
 <!-- Pedidos Content -->
 <div class="col-span-full">
 
-  <div :id="$id('wrapper')" class="card" x-data="gridjs_table('orders', $refs.table)">
-    <div class="w-full after:clear-both after:content-[''] after:block flex gap-2 m-0 py-2 px-4">
-      <h1 class="order-1 text-base font-semibold py-2 text-neutral-70 grow" x-text="title"></h1>
-      <div class="gridjs-search order-2">
-        <input x-model="search" @input.debounce="searchServer" type="search" placeholder="Buscar" aria-label="Buscar"
-          class="gridjs-input gridjs-search-input" value="" spellcheck="false" data-ms-editor="true">
-      </div>
-      <div class="order-3">          
-          <button @click="show_datePicker = !show_datePicker" x-ref="calendar_button"
-            class="gridjs-datetime w-60 text-left text-neutral border border-gray-300 rounded-md text-sm focus:outline-none focus:ring focus:ring-blue-200 py-2.5 px-3">
-            <span x-text="displayText_datePicker || 'Data Início ⇀ Data fim'"></span>
-          </button>
-          <!-- Calendar Dropdown -->
-          <div x-show="show_datePicker" x-anchor.bottom-end.offset.10="$refs.calendar_button" @click.outside="show_datePicker = false"
-            class="z-10 mt-2 bg-white border border-gray-300 rounded shadow-lg p-4">
-            <div class="flex space-x-4">
-              <!-- Start Date Calendar -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Data Início</label>
-                <input type="date" x-model="startDate" @input.debounce="searchServer"
-                  class="border border-gray-300 rounded w-full px-2 py-1 text-sm focus:outline-none focus:ring focus:ring-blue-200" />
-              </div>
-              <!-- End Date Calendar -->
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Data fim</label>
-                <input type="date" x-model="endDate" @input.debounce="searchServer"
-                  class="border border-gray-300 rounded w-full px-2 py-1 text-sm focus:outline-none focus:ring focus:ring-blue-200" />
-              </div>
-            </div>
-            <!-- Buttons -->
-            <div class="flex justify-end space-x-2 mt-4">
-              <button @click="clear_datePicker"
-                class="px-4 py-2 text-sm text-gray-500 border border-gray-300 rounded hover:bg-gray-100">
-                Limpar
-              </button>
-            </div>
-          </div>
-      </div>
-      <button class="order-4 text-base !border !border-gray-300 text-primary !bg-white rounded w-11 options-item-btn"
-        x-on:click="updateServerUrl('Concluido')">
-
-      </button>
-
-      <button class="order-5 text-base !border !border-gray-300 text-primary !bg-white rounded w-11 export-item-btn"
-        x-on:click="updateServerUrl('Concluido')">
-
-      </button>
-
-      <button class="order-6 text-base text-white !bg-primary rounded w-11 add-item-btn"
-        x-on:click="updateServerUrl('Cancelado')">
-      </button>
-    </div>
-
-
-    <div x-ref="table"></div>
+  <div :id="$id('wrapper')" class="card" x-data="gridjs_table('orders', $refs.table)" x-include="components/dinamic_table.html">
+    
 
   </div>
 </div>
