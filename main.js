@@ -1,5 +1,6 @@
 import './styles/base.css';
 import Alpine from 'alpinejs';
+import anchor from '@alpinejs/anchor'
 import auth from './components/store/auth.js';
 import site from './components/store/site.js';
 import login from './components/login.js';
@@ -29,6 +30,7 @@ Alpine.data('charts', charts);
 Alpine.data('spinner', spinner);
 
 Alpine.plugin(icons);
+Alpine.plugin(anchor);
 
 // Initialize stores
 document.addEventListener('alpine:init', () => {

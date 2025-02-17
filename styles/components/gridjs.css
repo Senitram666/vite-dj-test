@@ -122,7 +122,7 @@
     @apply block w-full relative z-10 
            bg-white border border-gray-200 
            rounded-b-lg 
-           px-6 py-3 
+           px-6 pt-3 pb-1.5 
            shadow-md;
   }
 
@@ -176,7 +176,7 @@
     @apply bg-gray-100 font-bold;
   }
   .gridjs-pagination .gridjs-pages button.gridjs-spread {
-    @apply bg-white shadow-none cursor-default focus:ring-0;
+    @apply bg-white shadow-none cursor-default focus:ring-0 sm:inline-block hidden;
   }
 
   button.gridjs-sort {
