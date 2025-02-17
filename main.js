@@ -7,7 +7,6 @@ import navbar from './components/navbar.js';
 import dashboard from './components/dashboard.js';
 import dynamicTable from './components/dynamic_table.js';
 import gridjs_table from './components/gridjs_table.js';
-import dateRangePicker from './components/date_range_picker.js';
 import tabs from './components/store/tabs.js';
 import charts from './components/charts.js';
 import icons from './components/icons.js';
@@ -26,7 +25,6 @@ Alpine.data('navbar', navbar);
 Alpine.data('dashboard', dashboard);
 Alpine.data('dynamicTable', dynamicTable);
 Alpine.data('gridjs_table', gridjs_table);
-Alpine.data('dateRangePicker', dateRangePicker);
 Alpine.data('charts', charts);
 Alpine.data('spinner', spinner);
 
